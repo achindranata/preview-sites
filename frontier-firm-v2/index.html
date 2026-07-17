@@ -1,0 +1,791 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="color-scheme" content="dark">
+<title>The Frontier Firm — A Blueprint for Everybody</title>
+<script>document.documentElement.classList.add('js');</script>
+<style>
+/* ============================================================
+   THE FRONTIER FIRM · Work Trend Index 2026
+   Dark · Blueprint · Premium automotive · Scroll-linked
+   ============================================================ */
+
+:root{
+  color-scheme: dark;
+
+  --bg:        #05070e;
+  --bg-2:      #070b16;
+  --panel:     rgba(12,18,32,0.55);
+  --panel-2:   rgba(16,24,42,0.75);
+
+  --ink:       #e6eefb;
+  --ink-soft:  #b8c8e2;
+  --ink-dim:   #7c90b2;
+  --ink-faint: #47597a;
+
+  --line:      rgba(96,150,224,0.14);
+  --line-2:    rgba(96,150,224,0.28);
+
+  --cyan:      #4db8ff;
+  --cyan-hi:   #8fe6ff;
+  --cyan-deep: #1c6fb0;
+  --amber:     #ffc987;
+  --violet:    #a487ff;
+  --magenta:   #ff6fb0;
+
+  --agent-a:   #ff6fb0;
+  --agent-b:   #a487ff;
+  --agent-c:   #4db8ff;
+
+  --edge: 1px solid var(--line-2);
+
+  --font-display: "Segoe UI Variable Display","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --font-body:    "Segoe UI Variable Text","Segoe UI",system-ui,-apple-system,"Helvetica Neue",Arial,sans-serif;
+  --font-mono:    "Cascadia Code","Cascadia Mono",ui-monospace,"SF Mono","Consolas","Segoe UI Mono",monospace;
+
+  --maxw: 1180px;
+  --ease: cubic-bezier(.2,.7,.2,1);
+}
+
+*{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; -webkit-text-size-adjust:100%; }
+
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:var(--font-body);
+  font-size:clamp(15px,1.05vw,17px);
+  line-height:1.6;
+  letter-spacing:.01em;
+  overflow-x:hidden;
+  -webkit-font-smoothing:antialiased;
+  text-rendering:optimizeLegibility;
+}
+
+/* -------- Fixed blueprint backdrop -------- */
+.backdrop{
+  position:fixed; inset:0; z-index:-2; pointer-events:none;
+  background:
+    radial-gradient(1200px 800px at 78% -8%, rgba(29,111,176,0.22), transparent 60%),
+    radial-gradient(1000px 900px at 12% 108%, rgba(164,135,255,0.12), transparent 60%),
+    linear-gradient(180deg, var(--bg) 0%, var(--bg-2) 45%, var(--bg) 100%);
+}
+.grid-layer{
+  position:fixed; inset:0; z-index:-2; pointer-events:none; opacity:.9;
+  background-image:
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px),
+    linear-gradient(var(--line) 1px, transparent 1px),
+    linear-gradient(90deg, var(--line) 1px, transparent 1px);
+  background-size: 120px 120px, 120px 120px, 24px 24px, 24px 24px;
+  background-position: -1px -1px, -1px -1px, -1px -1px, -1px -1px;
+  -webkit-mask-image: radial-gradient(120% 100% at 50% 0%, #000 55%, transparent 100%);
+          mask-image: radial-gradient(120% 100% at 50% 0%, #000 55%, transparent 100%);
+}
+.vignette{
+  position:fixed; inset:0; z-index:-1; pointer-events:none;
+  background: radial-gradient(120% 80% at 50% 40%, transparent 55%, rgba(2,4,9,0.75) 100%);
+}
+
+/* -------- Registration marks (blueprint corners) -------- */
+.reg{ position:fixed; z-index:40; width:26px; height:26px; pointer-events:none; opacity:.5; }
+.reg::before,.reg::after{ content:""; position:absolute; background:var(--cyan); opacity:.7; }
+.reg::before{ inset-inline-start:0; top:12px; width:26px; height:1px; }
+.reg::after{ inset-inline-start:12px; top:0; width:1px; height:26px; }
+.reg--tl{ top:16px; inset-inline-start:16px; }
+.reg--tr{ top:16px; inset-inline-end:16px; }
+.reg--bl{ bottom:16px; inset-inline-start:16px; }
+.reg--br{ bottom:16px; inset-inline-end:16px; }
+
+/* -------- Top progress rail + nav -------- */
+.rail{
+  position:fixed; top:0; inset-inline:0; z-index:50; height:2px;
+  background:linear-gradient(90deg, transparent, var(--line-2));
+}
+.rail__fill{
+  height:100%; width:100%;
+  transform:scaleX(0); transform-origin:left center;
+  background:linear-gradient(90deg, var(--cyan-deep), var(--cyan), var(--cyan-hi));
+  box-shadow:0 0 12px rgba(77,184,255,.7);
+}
+
+.hud{
+  position:fixed; z-index:45; top:20px; inset-inline-end:64px;
+  display:flex; gap:22px; align-items:center;
+  font-family:var(--font-mono); font-size:11px; letter-spacing:.16em;
+  color:var(--ink-dim); text-transform:uppercase;
+}
+.hud__nav{ display:flex; gap:18px; }
+.hud__nav button{
+  appearance:none; background:none; border:0; cursor:pointer; padding:2px 0;
+  font:inherit; letter-spacing:.16em; color:var(--ink-dim);
+  position:relative; transition:color .3s var(--ease);
+}
+.hud__nav button::after{
+  content:""; position:absolute; left:0; right:0; bottom:-4px; height:1px;
+  background:var(--cyan); transform:scaleX(0); transform-origin:left; transition:transform .3s var(--ease);
+}
+.hud__nav button:hover{ color:var(--ink); }
+.hud__nav button.on{ color:var(--cyan-hi); }
+.hud__nav button.on::after{ transform:scaleX(1); }
+.hud__coord{ color:var(--ink-faint); }
+.hud__coord b{ color:var(--cyan); font-weight:600; }
+
+/* -------- Layout helpers -------- */
+.wrap{ width:min(var(--maxw), 92vw); margin-inline:auto; }
+section{ position:relative; }
+
+.tag{
+  font-family:var(--font-mono); font-size:12px; letter-spacing:.28em;
+  text-transform:uppercase; color:var(--cyan);
+  display:inline-flex; align-items:center; gap:12px;
+}
+.tag::before{ content:""; width:34px; height:1px; background:var(--cyan); opacity:.7; }
+
+h1,h2,h3{ font-family:var(--font-display); font-weight:700; line-height:1.02; letter-spacing:-.02em; margin:0; }
+
+/* -------- Reveal system (JS-gated) -------- */
+.js [data-reveal]{ opacity:0; transform:translateY(26px); }
+.js [data-reveal].in{ opacity:1; transform:none; transition:opacity .9s var(--ease), transform .9s var(--ease); }
+.js [data-reveal][data-delay="1"].in{ transition-delay:.08s; }
+.js [data-reveal][data-delay="2"].in{ transition-delay:.16s; }
+.js [data-reveal][data-delay="3"].in{ transition-delay:.24s; }
+.js [data-reveal][data-delay="4"].in{ transition-delay:.32s; }
+
+/* ============================================================
+   HERO
+   ============================================================ */
+.hero{ min-height:100svh; display:flex; align-items:center; padding-block:120px 80px; overflow:hidden; }
+.hero__grid{
+  display:grid; grid-template-columns:1.05fr .95fr; gap:56px; align-items:center; width:100%;
+}
+.hero__eyebrow{ margin-bottom:26px; }
+.hero h1{
+  font-size:clamp(52px, 9.5vw, 132px);
+  background:linear-gradient(180deg,#ffffff 0%, #cfe4ff 48%, #6fb6ef 100%);
+  -webkit-background-clip:text; background-clip:text; color:transparent;
+  text-shadow:0 0 60px rgba(77,184,255,.12);
+}
+.hero h1 .thin{ font-weight:300; display:block; font-size:.32em; letter-spacing:.02em; color:var(--ink-soft); -webkit-text-fill-color:var(--ink-soft); margin-bottom:.35em; }
+.hero__sub{
+  margin-top:30px; max-width:44ch; color:var(--ink-soft); font-size:clamp(16px,1.4vw,20px); line-height:1.65;
+}
+.hero__meta{
+  margin-top:36px; display:flex; flex-wrap:wrap; gap:10px;
+}
+.pill{
+  font-family:var(--font-mono); font-size:11.5px; letter-spacing:.14em; text-transform:uppercase;
+  color:var(--ink-soft); padding:8px 14px; border:var(--edge); border-radius:100px;
+  background:var(--panel); backdrop-filter:blur(6px);
+}
+.pill b{ color:var(--cyan-hi); font-weight:600; }
+
+/* Hero blueprint illustration */
+.blueprint{ position:relative; aspect-ratio:1/1; }
+.blueprint svg{ width:100%; height:100%; overflow:visible; display:block; }
+.blueprint .ln{
+  fill:none; stroke:var(--cyan); stroke-width:1.4; vector-effect:non-scaling-stroke;
+  stroke-linecap:round; stroke-linejoin:round;
+  stroke-dasharray:var(--len,1400); stroke-dashoffset:var(--len,1400);
+}
+.blueprint .ln.soft{ stroke:rgba(143,230,255,.45); }
+.blueprint .fill{ fill:rgba(77,184,255,.05); stroke:none; opacity:0; }
+.blueprint .node{ fill:var(--cyan-hi); opacity:0; }
+.blueprint .fig{ fill:rgba(230,238,251,.6); opacity:0; }
+.js .blueprint.draw .ln{ animation:draw 2.6s var(--ease) forwards; }
+.js .blueprint.draw .fill{ animation:fadein 1.6s ease 1.6s forwards; }
+.js .blueprint.draw .node{ animation:pop 1s var(--ease) forwards; }
+.js .blueprint.draw .fig{ animation:fadein 1.2s ease 1.9s forwards; }
+@keyframes draw{ to{ stroke-dashoffset:0; } }
+@keyframes fadein{ to{ opacity:1; } }
+@keyframes pop{ 0%{opacity:0; transform:scale(.2);} 60%{opacity:1;} 100%{opacity:1; transform:scale(1);} }
+
+.blueprint__label{
+  position:absolute; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.14em;
+  text-transform:uppercase; color:var(--ink-dim); pointer-events:none;
+}
+.blueprint__label span{ color:var(--cyan); }
+.bl-a{ top:6%; inset-inline-start:2%; }
+.bl-b{ bottom:2%; inset-inline-end:4%; text-align:end; }
+
+.scrollcue{
+  position:absolute; bottom:28px; left:50%; transform:translateX(-50%);
+  display:flex; flex-direction:column; align-items:center; gap:10px;
+  font-family:var(--font-mono); font-size:10px; letter-spacing:.3em; text-transform:uppercase; color:var(--ink-dim);
+}
+.scrollcue__track{ width:1px; height:46px; background:linear-gradient(180deg,var(--cyan),transparent); position:relative; overflow:hidden; }
+.scrollcue__dot{ position:absolute; top:0; left:-1.5px; width:4px; height:4px; border-radius:50%; background:var(--cyan-hi); box-shadow:0 0 8px var(--cyan); animation:cue 2.2s var(--ease) infinite; }
+@keyframes cue{ 0%{ top:-6px; opacity:0; } 30%{opacity:1;} 100%{ top:46px; opacity:0; } }
+
+/* ============================================================
+   SECTION SHELL
+   ============================================================ */
+.band{ padding-block:clamp(90px,13vh,150px); }
+.band__head{ max-width:64ch; margin-bottom:52px; }
+.band__head h2{ font-size:clamp(32px,5vw,60px); margin-top:22px; }
+.band__head p{ margin-top:22px; color:var(--ink-soft); font-size:clamp(16px,1.5vw,19px); max-width:56ch; }
+
+.fig-no{
+  position:absolute; top:-8px; inset-inline-end:0; font-family:var(--font-mono);
+  font-size:11px; letter-spacing:.24em; color:var(--ink-faint); text-transform:uppercase;
+}
+
+/* -------- THE SHIFT -------- */
+.def{
+  margin-top:40px; padding:28px 30px; border:var(--edge); border-inline-start:2px solid var(--cyan);
+  background:var(--panel); border-radius:4px; max-width:60ch;
+  font-family:var(--font-display); font-size:clamp(18px,2vw,24px); line-height:1.4; color:var(--ink);
+}
+.def small{ display:block; margin-top:14px; font-family:var(--font-mono); font-size:11px; letter-spacing:.22em; text-transform:uppercase; color:var(--cyan); }
+
+.stats{ margin-top:64px; display:grid; grid-template-columns:repeat(3,1fr); gap:1px; background:var(--line); border:var(--edge); border-radius:6px; overflow:hidden; }
+.stat{ background:var(--bg-2); padding:34px 28px; position:relative; }
+.stat__num{ font-family:var(--font-display); font-weight:700; font-size:clamp(40px,6vw,72px); line-height:1;
+  background:linear-gradient(180deg,#fff,#79bdf0); -webkit-background-clip:text; background-clip:text; color:transparent; letter-spacing:-.03em; }
+.stat__num i{ font-style:normal; font-size:.42em; color:var(--cyan); -webkit-text-fill-color:var(--cyan); margin-inline-start:2px; }
+.stat__txt{ margin-top:14px; color:var(--ink-soft); font-size:14.5px; line-height:1.5; max-width:30ch; }
+.stat::after{ content:""; position:absolute; top:20px; inset-inline-end:20px; width:7px; height:7px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan); opacity:.7; }
+
+/* ============================================================
+   JOURNEY (scroll-linked spine)
+   ============================================================ */
+.journey{ position:relative; padding-block:40px 60px; }
+.spine{ position:absolute; top:0; bottom:0; inset-inline-start:calc(50% - 1px); width:2px; background:var(--line); }
+.spine__fill{
+  position:absolute; top:0; left:0; right:0; height:100%;
+  transform:scaleY(0); transform-origin:top center;
+  background:linear-gradient(180deg,var(--cyan-hi),var(--cyan),var(--violet));
+  box-shadow:0 0 16px rgba(77,184,255,.6);
+}
+
+.phase{ position:relative; min-height:78vh; display:grid; grid-template-columns:1fr 1fr; gap:0; align-items:center; }
+.phase__body{ padding:40px 56px; }
+.phase:nth-child(odd) .phase__body{ grid-column:1; text-align:end; }
+.phase:nth-child(odd) .phase__art{ grid-column:2; }
+.phase:nth-child(even) .phase__body{ grid-column:2; }
+.phase:nth-child(even) .phase__art{ grid-column:1; order:-1; }
+
+.phase__node{
+  position:absolute; top:50%; inset-inline-start:calc(50% - 13px); width:26px; height:26px; border-radius:50%;
+  transform:translateY(-50%) scale(.4); background:var(--bg); border:1px solid var(--line-2);
+  display:grid; place-items:center; z-index:2; opacity:.4; transition:all .6s var(--ease);
+}
+.phase__node::before{ content:""; width:8px; height:8px; border-radius:50%; background:var(--ink-faint); transition:all .6s var(--ease); }
+.phase.active .phase__node{ opacity:1; transform:translateY(-50%) scale(1); border-color:var(--cyan); box-shadow:0 0 0 6px rgba(77,184,255,.08), 0 0 22px rgba(77,184,255,.5); }
+.phase.active .phase__node::before{ background:var(--cyan-hi); box-shadow:0 0 10px var(--cyan-hi); }
+
+.phase__step{ font-family:var(--font-mono); font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--cyan); }
+.phase h3{ font-size:clamp(26px,3.6vw,44px); margin-top:14px; }
+.phase__role{ margin-top:6px; font-family:var(--font-mono); font-size:12.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim); }
+.phase__desc{ margin-top:20px; color:var(--ink-soft); font-size:clamp(15px,1.5vw,18px); line-height:1.6; margin-inline-start:auto; max-width:42ch; }
+.phase:nth-child(even) .phase__desc{ margin-inline-start:0; }
+
+.phase__body{ opacity:.35; transform:translateY(20px); transition:opacity .8s var(--ease), transform .8s var(--ease); }
+.phase.active .phase__body{ opacity:1; transform:none; }
+
+/* Human + agent composition */
+.crew{ display:flex; justify-content:center; align-items:flex-end; gap:20px; padding:30px; min-height:230px; }
+.phase:nth-child(odd) .crew{ justify-content:flex-start; }
+.phase:nth-child(even) .crew{ justify-content:flex-end; }
+.unit{ display:flex; flex-direction:column; align-items:center; gap:9px; opacity:0; transform:translateY(14px); }
+.phase.active .unit{ opacity:1; transform:none; transition:opacity .7s var(--ease), transform .7s var(--ease); }
+.phase.active .unit.d1{ transition-delay:.15s; }
+.phase.active .unit.d2{ transition-delay:.3s; }
+.phase.active .unit.d3{ transition-delay:.45s; }
+.phase.active .unit.d4{ transition-delay:.6s; }
+.avatar{ width:48px; height:48px; border-radius:50%; display:grid; place-items:center; position:relative; }
+.avatar svg{ width:26px; height:26px; }
+.avatar.human{ background:radial-gradient(circle at 35% 30%, #2a3b5c, #14203a); border:1px solid rgba(143,230,255,.4); }
+.avatar.human svg{ fill:var(--cyan-hi); }
+.avatar.agent{ background:conic-gradient(from 210deg, var(--agent-a), var(--agent-b), var(--agent-c), var(--agent-a)); box-shadow:0 0 18px rgba(164,135,255,.35); }
+.avatar.agent svg{ fill:#0a0e18; }
+.avatar.agent::after{ content:""; position:absolute; inset:3px; border-radius:50%; background:rgba(8,12,24,.28); }
+.avatar.agent svg{ position:relative; z-index:1; }
+.unit small{ font-family:var(--font-mono); font-size:9.5px; letter-spacing:.12em; text-transform:uppercase; color:var(--ink-dim); }
+.plus{ align-self:center; color:var(--ink-dim); font-size:20px; padding-bottom:26px; }
+
+/* ============================================================
+   MICROSOFT IQ
+   ============================================================ */
+.iq-def{
+  display:grid; grid-template-columns:1.15fr .85fr; gap:44px; align-items:center; margin-bottom:60px;
+}
+.iq-def .def{ margin-top:0; }
+.iq-stack{ position:relative; padding:8px; }
+.iq-stack__row{
+  display:flex; align-items:center; gap:14px; padding:14px 18px; margin-bottom:10px;
+  border:var(--edge); border-radius:6px; background:var(--panel-2); font-family:var(--font-mono);
+  font-size:12px; letter-spacing:.1em; text-transform:uppercase; color:var(--ink-soft);
+}
+.iq-stack__row b{ color:var(--cyan-hi); font-weight:600; }
+.iq-stack__row .dot{ width:9px; height:9px; border-radius:50%; background:var(--cyan); box-shadow:0 0 10px var(--cyan); }
+.iq-stack__cap{ text-align:center; font-family:var(--font-mono); font-size:10.5px; letter-spacing:.2em; text-transform:uppercase; color:var(--ink-faint); margin-top:8px; }
+
+.iq-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:20px; }
+.iq-card{
+  position:relative; padding:30px 30px 32px; border:var(--edge); border-radius:8px; overflow:hidden;
+  background:linear-gradient(180deg, var(--panel-2), rgba(8,12,22,.6));
+}
+.iq-card::before{
+  content:""; position:absolute; inset:0; border-radius:8px; padding:1px; pointer-events:none;
+  background:linear-gradient(140deg, rgba(77,184,255,.5), transparent 40%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box, linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor; mask-composite:exclude; opacity:0; transition:opacity .5s var(--ease);
+}
+.iq-card:hover::before{ opacity:1; }
+.iq-card:hover{ transform:translateY(-3px); transition:transform .4s var(--ease); }
+.iq-card__ico{
+  width:52px; height:52px; border-radius:12px; display:grid; place-items:center; margin-bottom:22px;
+  background:radial-gradient(circle at 30% 25%, rgba(77,184,255,.22), rgba(16,26,46,.6));
+  border:1px solid var(--line-2);
+}
+.iq-card__ico svg{ width:28px; height:28px; fill:none; stroke:var(--cyan-hi); stroke-width:1.6; stroke-linecap:round; stroke-linejoin:round; }
+.iq-card h3{ font-size:23px; letter-spacing:-.01em; }
+.iq-card h3 span{ color:var(--cyan); }
+.iq-card__tl{ margin-top:4px; font-family:var(--font-mono); font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--ink-dim); }
+.iq-card p{ margin-top:18px; color:var(--ink-soft); font-size:14.5px; line-height:1.6; }
+.iq-card__no{ position:absolute; top:22px; inset-inline-end:24px; font-family:var(--font-mono); font-size:12px; letter-spacing:.2em; color:var(--ink-faint); }
+
+/* ============================================================
+   CLOSING
+   ============================================================ */
+.close{ text-align:center; padding-block:clamp(110px,16vh,180px); }
+.close h2{ font-size:clamp(34px,6vw,74px); max-width:16ch; margin-inline:auto;
+  background:linear-gradient(180deg,#fff,#8bc4f0); -webkit-background-clip:text; background-clip:text; color:transparent; }
+.close p{ margin:28px auto 0; max-width:52ch; color:var(--ink-soft); font-size:clamp(16px,1.6vw,20px); }
+.close__mark{ margin-top:42px; display:inline-flex; align-items:center; gap:14px; font-family:var(--font-mono);
+  font-size:12px; letter-spacing:.24em; text-transform:uppercase; color:var(--cyan); }
+.close__mark span{ width:44px; height:1px; background:var(--cyan); opacity:.7; }
+
+footer{ border-top:var(--edge); padding-block:40px 60px; }
+footer .wrap{ display:flex; flex-wrap:wrap; gap:22px 40px; justify-content:space-between; align-items:flex-start; }
+footer .brand{ font-family:var(--font-display); font-weight:700; font-size:15px; letter-spacing:.02em; color:var(--ink); }
+footer .src{ font-family:var(--font-mono); font-size:11px; line-height:1.9; letter-spacing:.04em; color:var(--ink-faint); max-width:60ch; }
+footer .src b{ color:var(--ink-dim); font-weight:600; }
+
+/* ============================================================
+   RESPONSIVE — tablet
+   ============================================================ */
+@media (max-width:960px){
+  .hud{ inset-inline-end:44px; gap:16px; }
+  .hud__nav{ display:none; }
+  .hero__grid{ grid-template-columns:1fr; gap:40px; }
+  .blueprint{ max-width:420px; margin-inline:auto; width:100%; order:-1; }
+  .iq-def{ grid-template-columns:1fr; gap:30px; }
+  .stats{ grid-template-columns:1fr; }
+  .iq-grid{ grid-template-columns:1fr; }
+}
+@media (max-width:760px){
+  .spine{ inset-inline-start:15px; }
+  .spine__fill{ }
+  .phase{ grid-template-columns:1fr; min-height:auto; padding-block:44px; gap:14px; }
+  .phase__body,
+  .phase:nth-child(odd) .phase__body,
+  .phase:nth-child(even) .phase__body{ grid-column:1; text-align:start; padding:0 0 0 44px; }
+  .phase__art,
+  .phase:nth-child(even) .phase__art{ grid-column:1; order:0; padding-inline-start:30px; }
+  .phase__node,
+  .phase:nth-child(odd) .phase__node,
+  .phase:nth-child(even) .phase__node{ inset-inline-start:2px; top:8px; transform:scale(1); }
+  .phase.active .phase__node{ transform:scale(1); }
+  .phase__desc,
+  .phase:nth-child(odd) .phase__desc{ margin-inline-start:0; }
+  .crew,
+  .phase:nth-child(odd) .crew,
+  .phase:nth-child(even) .crew{ justify-content:flex-start; padding-inline:0; }
+  .reg{ display:none; }
+  .hud{ inset-inline-end:20px; top:16px; }
+  .hud__coord{ display:none; }
+}
+@media (max-width:520px){
+  .band__head h2{ font-size:34px; }
+  .crew{ flex-wrap:wrap; }
+}
+
+/* ============================================================
+   REDUCED MOTION
+   ============================================================ */
+@media (prefers-reduced-motion: reduce){
+  html{ scroll-behavior:auto; }
+  *{ animation:none !important; transition:none !important; }
+  .js [data-reveal]{ opacity:1 !important; transform:none !important; }
+  .blueprint .ln{ stroke-dashoffset:0 !important; }
+  .blueprint .fill,.blueprint .node,.blueprint .fig{ opacity:1 !important; transform:none !important; }
+  .phase__body,.unit{ opacity:1 !important; transform:none !important; }
+  .phase__node{ opacity:1 !important; transform:translateY(-50%) scale(1) !important; }
+  .scrollcue__dot{ display:none; }
+}
+</style>
+</head>
+<body>
+
+<div class="backdrop"></div>
+<div class="grid-layer" id="gridLayer"></div>
+<div class="vignette"></div>
+<span class="reg reg--tl"></span><span class="reg reg--tr"></span>
+<span class="reg reg--bl"></span><span class="reg reg--br"></span>
+
+<div class="rail"><div class="rail__fill" id="railFill"></div></div>
+
+<nav class="hud" aria-label="Section navigation">
+  <div class="hud__nav">
+    <button type="button" data-goto="#journey">Journey</button>
+    <button type="button" data-goto="#iq">Microsoft IQ</button>
+    <button type="button" data-goto="#close">Everybody</button>
+  </div>
+  <div class="hud__coord">SEC <b id="secNo">00</b> · <span id="scrollPct">000</span>%</div>
+</nav>
+
+<!-- ============ HERO ============ -->
+<header class="hero" id="top">
+  <div class="wrap hero__grid">
+    <div>
+      <div class="tag hero__eyebrow" data-reveal>Microsoft · Work Trend Index 2026</div>
+      <h1 data-reveal data-delay="1"><span class="thin">The</span>Frontier Firm</h1>
+      <p class="hero__sub" data-reveal data-delay="2">
+        The journey to an AI-powered organization — where human ambition sets the
+        direction and digital labor does the heavy lifting. A blueprint for
+        <em>everybody</em>, from the boardroom to the frontline.
+      </p>
+      <div class="hero__meta" data-reveal data-delay="3">
+        <span class="pill">Intelligence <b>on tap</b></span>
+        <span class="pill">Human-agent <b>teams</b></span>
+        <span class="pill">The <b>agent boss</b></span>
+      </div>
+    </div>
+
+    <div class="blueprint" id="blueprint" aria-hidden="true">
+      <div class="blueprint__label bl-a">FIG.01 — <span>THE&nbsp;NEW&nbsp;BLUEPRINT</span></div>
+      <div class="blueprint__label bl-b">HUMAN-LED · <span>AGENT-OPERATED</span></div>
+      <svg viewBox="0 0 400 400" role="img" aria-label="Blueprint of an AI-powered organization">
+        <!-- ground -->
+        <path class="ln soft" style="--len:400" d="M20 330 H380"/>
+        <path class="ln soft" style="--len:60" d="M20 330 l-0 0"/>
+        <!-- central tower -->
+        <path class="ln" style="--len:900;animation-delay:.15s" d="M150 330 V120 L200 90 L250 120 V330"/>
+        <path class="ln" style="--len:520;animation-delay:.35s" d="M150 120 H250 M150 170 H250 M150 220 H250 M150 270 H250"/>
+        <!-- left wing -->
+        <path class="ln" style="--len:600;animation-delay:.5s" d="M60 330 V200 L110 175 V330 M60 200 H110 M60 250 H110 M60 300 H110"/>
+        <!-- right wing -->
+        <path class="ln" style="--len:640;animation-delay:.6s" d="M290 330 V190 L345 165 V330 M290 240 H345 M290 290 H345"/>
+        <!-- canopy / span -->
+        <path class="ln soft" style="--len:520;animation-delay:.8s" d="M40 120 Q200 40 360 120"/>
+        <path class="ln soft" style="--len:340;animation-delay:.95s" d="M90 100 L200 66 L310 100"/>
+        <!-- verticals connecting canopy -->
+        <path class="ln soft" style="--len:260;animation-delay:1.1s" d="M110 92 V128 M200 66 V90 M290 92 V128"/>
+        <!-- fill panels -->
+        <path class="fill" d="M150 120 H250 V330 H150 Z"/>
+        <path class="fill" d="M60 200 H110 V330 H60 Z"/>
+        <!-- nodes -->
+        <circle class="node" style="animation-delay:1.4s" cx="200" cy="66" r="4"/>
+        <circle class="node" style="animation-delay:1.55s" cx="110" cy="175" r="3.4"/>
+        <circle class="node" style="animation-delay:1.7s" cx="345" cy="165" r="3.4"/>
+        <circle class="node" style="animation-delay:1.85s" cx="200" cy="90" r="3.4"/>
+        <!-- figures (people) -->
+        <g class="fig" style="animation-delay:2s">
+          <circle cx="176" cy="352" r="4"/><rect x="173" y="357" width="6" height="14" rx="2"/>
+        </g>
+        <g class="fig" style="animation-delay:2.1s">
+          <circle cx="196" cy="350" r="4"/><rect x="193" y="355" width="6" height="16" rx="2"/>
+        </g>
+        <g class="fig" style="animation-delay:2.2s">
+          <circle cx="216" cy="353" r="4"/><rect x="213" y="358" width="6" height="13" rx="2"/>
+        </g>
+        <g class="fig" style="animation-delay:2.3s">
+          <circle cx="236" cy="351" r="4"/><rect x="233" y="356" width="6" height="15" rx="2"/>
+        </g>
+      </svg>
+    </div>
+  </div>
+
+  <div class="scrollcue" aria-hidden="true">
+    <span>Scroll</span>
+    <div class="scrollcue__track"><span class="scrollcue__dot"></span></div>
+  </div>
+</header>
+
+<!-- ============ 01 · THE JOURNEY ============ -->
+<section class="band" id="journey">
+  <div class="wrap">
+    <span class="fig-no">FIG.02</span>
+    <div class="band__head">
+      <span class="tag" data-reveal>01 · The Journey</span>
+      <h2 data-reveal data-delay="1">Journey to the Frontier Firm</h2>
+      <p data-reveal data-delay="2">
+        Every organization's path looks different — but it plays out in three phases.
+        And it isn't strictly linear: most organizations operate in all three at once.
+      </p>
+    </div>
+  </div>
+
+  <div class="wrap journey">
+    <div class="spine" aria-hidden="true"><div class="spine__fill" id="spineFill"></div></div>
+
+    <!-- PHASE 1 -->
+    <article class="phase" data-phase>
+      <span class="phase__node" aria-hidden="true"></span>
+      <div class="phase__body">
+        <div class="phase__step">Phase 01</div>
+        <h3>Human with an assistant</h3>
+        <div class="phase__role">Human&nbsp;+&nbsp;AI assistant</div>
+        <p class="phase__desc">
+          AI acts as an assistant — removing the drudgery of work and helping every person
+          do the same work better and faster.
+        </p>
+      </div>
+      <div class="phase__art">
+        <div class="crew" aria-hidden="true">
+          <div class="unit d1"><span class="avatar human"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zm0 2c-4 0-7 2-7 5v1h14v-1c0-3-3-5-7-5z"/></svg></span><small>Human</small></div>
+          <span class="plus">+</span>
+          <div class="unit d2"><span class="avatar agent"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 5.2L19.5 9l-4 3.6L16.7 18 12 15.2 7.3 18l1.2-5.4-4-3.6 5.3-1.8z"/></svg></span><small>Assistant</small></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PHASE 2 -->
+    <article class="phase" data-phase>
+      <span class="phase__node" aria-hidden="true"></span>
+      <div class="phase__body">
+        <div class="phase__step">Phase 02</div>
+        <h3>Human-led agents</h3>
+        <div class="phase__role">Agents as digital colleagues</div>
+        <p class="phase__desc">
+          Agents join teams as "digital colleagues," taking on specific tasks at human
+          direction — like a researcher agent drafting a go-to-market plan — and giving
+          people new skills to scale their impact.
+        </p>
+      </div>
+      <div class="phase__art">
+        <div class="crew" aria-hidden="true">
+          <div class="unit d1"><span class="avatar human"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zm0 2c-4 0-7 2-7 5v1h14v-1c0-3-3-5-7-5z"/></svg></span><small>Lead</small></div>
+          <div class="unit d2"><span class="avatar agent"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 5.2L19.5 9l-4 3.6L16.7 18 12 15.2 7.3 18l1.2-5.4-4-3.6 5.3-1.8z"/></svg></span><small>Agent</small></div>
+          <div class="unit d3"><span class="avatar agent"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 5.2L19.5 9l-4 3.6L16.7 18 12 15.2 7.3 18l1.2-5.4-4-3.6 5.3-1.8z"/></svg></span><small>Agent</small></div>
+        </div>
+      </div>
+    </article>
+
+    <!-- PHASE 3 -->
+    <article class="phase" data-phase>
+      <span class="phase__node" aria-hidden="true"></span>
+      <div class="phase__body">
+        <div class="phase__step">Phase 03</div>
+        <h3>Human-led, agent-operated</h3>
+        <div class="phase__role">Humans set direction</div>
+        <p class="phase__desc">
+          Humans set direction for agents that run entire business processes and
+          workflows — checking in as needed while the work runs itself.
+        </p>
+      </div>
+      <div class="phase__art">
+        <div class="crew" aria-hidden="true">
+          <div class="unit d1"><span class="avatar human"><svg viewBox="0 0 24 24"><path d="M12 12a4 4 0 100-8 4 4 0 000 8zm0 2c-4 0-7 2-7 5v1h14v-1c0-3-3-5-7-5z"/></svg></span><small>Direction</small></div>
+          <div class="unit d2"><span class="avatar agent"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 5.2L19.5 9l-4 3.6L16.7 18 12 15.2 7.3 18l1.2-5.4-4-3.6 5.3-1.8z"/></svg></span><small>Agent</small></div>
+          <div class="unit d3"><span class="avatar agent"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 5.2L19.5 9l-4 3.6L16.7 18 12 15.2 7.3 18l1.2-5.4-4-3.6 5.3-1.8z"/></svg></span><small>Agent</small></div>
+          <div class="unit d4"><span class="avatar agent"><svg viewBox="0 0 24 24"><path d="M12 2l2.2 5.2L19.5 9l-4 3.6L16.7 18 12 15.2 7.3 18l1.2-5.4-4-3.6 5.3-1.8z"/></svg></span><small>Agent</small></div>
+        </div>
+      </div>
+    </article>
+  </div>
+</section>
+
+<!-- ============ 02 · MICROSOFT IQ ============ -->
+<section class="band" id="iq">
+  <div class="wrap">
+    <span class="fig-no">FIG.03</span>
+    <div class="band__head">
+      <span class="tag" data-reveal>02 · The Intelligence Layer</span>
+      <h2 data-reveal data-delay="1">Microsoft IQ</h2>
+      <p data-reveal data-delay="2">
+        What makes agents genuinely useful is context. Microsoft IQ is the enterprise
+        intelligence layer that gives every Copilot and agent a shared, always-current
+        understanding of your organization.
+      </p>
+    </div>
+
+    <div class="iq-def">
+      <div class="def" data-reveal>
+        It connects <strong>how people work</strong>, <strong>how the business operates</strong>,
+        and <strong>how agents unlock knowledge</strong> — so intelligence is grounded, not guessed.
+        <small>Four interconnected capabilities · one intelligence layer</small>
+      </div>
+      <div class="iq-stack" data-reveal data-delay="1" aria-hidden="true">
+        <div class="iq-stack__row"><span class="dot"></span><b>Work IQ</b>&nbsp;— how people work</div>
+        <div class="iq-stack__row"><span class="dot"></span><b>Fabric IQ</b>&nbsp;— the state of the business</div>
+        <div class="iq-stack__row"><span class="dot"></span><b>Foundry IQ</b>&nbsp;— institutional knowledge</div>
+        <div class="iq-stack__row"><span class="dot"></span><b>Web IQ</b>&nbsp;— fresh intelligence from the web</div>
+        <div class="iq-stack__cap">↓ feeds every Copilot &amp; agent interaction</div>
+      </div>
+    </div>
+
+    <div class="iq-grid">
+      <article class="iq-card" data-reveal>
+        <span class="iq-card__no">IQ.01</span>
+        <div class="iq-card__ico"><svg viewBox="0 0 24 24"><circle cx="8" cy="8" r="3"/><circle cx="17" cy="10" r="2.4"/><path d="M3 20c0-3 2.5-5 5-5s5 2 5 5"/><path d="M14 19c.3-2 1.8-3.4 3.6-3.4S21 17 21 19"/></svg></div>
+        <h3>Work <span>IQ</span></h3>
+        <div class="iq-card__tl">User context</div>
+        <p>
+          A live understanding of how people work — the context of people, collaboration,
+          and workflows. Built on your data, memory, and inference across email, files,
+          meetings, and chats, so Copilot can predict the next best action.
+        </p>
+      </article>
+
+      <article class="iq-card" data-reveal data-delay="1">
+        <span class="iq-card__no">IQ.02</span>
+        <div class="iq-card__ico"><svg viewBox="0 0 24 24"><path d="M4 7l8-4 8 4-8 4-8-4z"/><path d="M4 12l8 4 8-4"/><path d="M4 17l8 4 8-4"/></svg></div>
+        <h3>Fabric <span>IQ</span></h3>
+        <div class="iq-card__tl">Data context</div>
+        <p>
+          The live state of the business — so agents understand business entities and their
+          relationships, properties, actions, and rules. It elevates raw data into the
+          language of your business, grounded in a single source of truth.
+        </p>
+      </article>
+
+      <article class="iq-card" data-reveal data-delay="2">
+        <span class="iq-card__no">IQ.03</span>
+        <div class="iq-card__ico"><svg viewBox="0 0 24 24"><path d="M5 4h11a2 2 0 012 2v14H7a2 2 0 01-2-2V4z"/><path d="M9 4v14"/><path d="M12 8h5M12 11h5"/></svg></div>
+        <h3>Foundry <span>IQ</span></h3>
+        <div class="iq-card__tl">Knowledge context</div>
+        <p>
+          Curated institutional knowledge — policies, authoritative documents, and reusable
+          knowledge bases in one managed system. It grounds agents over many sources so they
+          cite their sources and reason with fewer mistakes.
+        </p>
+      </article>
+
+      <article class="iq-card" data-reveal data-delay="3">
+        <span class="iq-card__no">IQ.04</span>
+        <div class="iq-card__ico"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M3 12h18"/><path d="M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg></div>
+        <h3>Web <span>IQ</span></h3>
+        <div class="iq-card__tl">World context</div>
+        <p>
+          Fresh, real-world intelligence from across the web — giving AI systems and agents
+          current context beyond the four walls of the organization, so decisions reflect
+          what's happening right now.
+        </p>
+      </article>
+    </div>
+  </div>
+</section>
+
+<!-- ============ 03 · FOR EVERYBODY ============ -->
+<section class="close" id="close">
+  <div class="wrap">
+    <span class="tag" data-reveal style="justify-content:center;">03 · For Everybody</span>
+    <h2 data-reveal data-delay="1">Every employee becomes an agent boss</h2>
+    <p data-reveal data-delay="2">
+      From the boardroom to the frontline, everyone will build, delegate to, and manage
+      agents to amplify their impact. The Frontier Firm isn't only for leaders — it's a
+      blueprint for <em>everybody</em>.
+    </p>
+    <div class="close__mark" data-reveal data-delay="3"><span></span>The journey starts now<span></span></div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap">
+    <div class="brand">The Frontier Firm · Work Trend Index 2026</div>
+    <div class="src">
+      <b>Sources:</b> Microsoft WorkLab — “2025: The year the Frontier Firm is born” (Work Trend Index Annual Report).
+      Microsoft Learn — Microsoft IQ documentation (Work IQ, Fabric IQ, Foundry IQ, Web IQ).
+      Microsoft Ignite 2025 announcements. Figures reflect Microsoft's published research.
+    </div>
+  </div>
+</footer>
+
+<script>
+(function(){
+  var root = document.documentElement;
+  var reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- Hero blueprint draw-in ---- */
+  var bp = document.getElementById('blueprint');
+  if(bp){ window.requestAnimationFrame(function(){ setTimeout(function(){ bp.classList.add('draw'); }, 200); }); }
+
+  /* ---- Reveal on scroll ---- */
+  if('IntersectionObserver' in window){
+    var revObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){ e.target.classList.add('in'); revObs.unobserve(e.target); }
+      });
+    }, { threshold:0.18, rootMargin:'0px 0px -6% 0px' });
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ revObs.observe(el); });
+
+    /* ---- Phase activation ---- */
+    var phaseObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){ e.target.classList.toggle('active', e.isIntersecting); });
+    }, { threshold:0.55 });
+    document.querySelectorAll('[data-phase]').forEach(function(el){ phaseObs.observe(el); });
+
+    /* ---- Active nav highlight ---- */
+    var navBtns = Array.prototype.slice.call(document.querySelectorAll('.hud__nav button'));
+    var secNo = document.getElementById('secNo');
+    var order = ['journey','iq','close'];
+    var secObs = new IntersectionObserver(function(entries){
+      entries.forEach(function(e){
+        if(e.isIntersecting){
+          var id = e.target.id;
+          navBtns.forEach(function(b){ b.classList.toggle('on', b.getAttribute('data-goto') === '#'+id); });
+          var idx = order.indexOf(id);
+          if(secNo && idx>=0){ secNo.textContent = ('0'+(idx+1)).slice(-2); }
+        }
+      });
+    }, { threshold:0.5 });
+    document.querySelectorAll('section[id]').forEach(function(s){ secObs.observe(s); });
+  } else {
+    document.querySelectorAll('[data-reveal]').forEach(function(el){ el.classList.add('in'); });
+    document.querySelectorAll('[data-phase]').forEach(function(el){ el.classList.add('active'); });
+  }
+
+  /* ---- Nav smooth scroll ---- */
+  document.querySelectorAll('[data-goto]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      var t = document.querySelector(btn.getAttribute('data-goto'));
+      if(t){ t.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth', block:'start' }); }
+    });
+  });
+
+  /* ---- Scroll-linked: rail, spine fill, HUD, parallax ---- */
+  var rail = document.getElementById('railFill');
+  var spine = document.getElementById('spineFill');
+  var journey = document.getElementById('journey');
+  var grid = document.getElementById('gridLayer');
+  var pct = document.getElementById('scrollPct');
+  var ticking = false;
+
+  function clamp(v,a,b){ return v<a?a:(v>b?b:v); }
+
+  function update(){
+    var st = window.pageYOffset || document.documentElement.scrollTop;
+    var vh = window.innerHeight;
+    var docH = document.documentElement.scrollHeight - vh;
+    var p = docH > 0 ? st/docH : 0;
+
+    if(rail){ rail.style.transform = 'scaleX(' + p.toFixed(4) + ')'; }
+    if(pct){ pct.textContent = ('00' + Math.round(p*100)).slice(-3); }
+
+    if(spine && journey){
+      var r = journey.getBoundingClientRect();
+      var span = r.height - vh*0.5;
+      var jp = clamp((vh*0.5 - r.top) / (span > 0 ? span : 1), 0, 1);
+      spine.style.transform = 'scaleY(' + jp.toFixed(4) + ')';
+    }
+
+    if(grid && !reduce){ grid.style.transform = 'translateY(' + (st * 0.04).toFixed(1) + 'px)'; }
+
+    ticking = false;
+  }
+
+  window.addEventListener('scroll', function(){
+    if(!ticking){ window.requestAnimationFrame(update); ticking = true; }
+  }, { passive:true });
+  window.addEventListener('resize', update, { passive:true });
+  update();
+})();
+</script>
+</body>
+</html>
