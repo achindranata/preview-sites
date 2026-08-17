@@ -316,7 +316,7 @@ h2.big{font-size:clamp(34px,5vw,66px)}
 .miqfoot.vis{opacity:1}
 
 /* ---------- 11 SOCKET ARCHITECTURE ---------- */
-#socket{height:460vh}
+#socket{height:340vh}
 .arch{position:absolute;left:0;right:0;display:flex;align-items:stretch;gap:22px}
 .archyou{flex:0 0 92px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9px;
   opacity:0;transform:translateX(-16px);transition:all .6s var(--ease)}
@@ -1357,32 +1357,35 @@ function socket(){
 
   $('#archyou').classList.toggle('vis', p>0.05);
 
-  /* planes fly in one by one */
+  /* SINGLE PASS: each plane flies in AND takes the spotlight in the same beat.
+     No second scroll-through to re-highlight. */
+  var START=0.08, STEP=0.13, N=planeEls.length;
+  var revealed=-1;
+  for(var k=0;k<N;k++){ if(p>=START+k*STEP) revealed=k; }
+  var settled = p >= START+N*STEP;
+
   planeEls.forEach(function(pl,i){
-    var s=0.06+i*0.055;
-    var t=clamp((p-s)/0.075,0,1); t=1-Math.pow(1-t,3);
+    var s=START+i*STEP;
+    var t=clamp((p-s)/0.085,0,1); t=1-Math.pow(1-t,3);
     pl.style.opacity=t;
     pl.style.transform='translateX('+((1-t)*70)+'px) rotateY('+((1-t)*-38)+'deg) scale('+(0.9+t*0.1)+')';
     pl.classList.toggle('vis', t>0.6);
+    pl.classList.toggle('act', !settled && i===revealed && t>0.6);
+    pl.classList.toggle('dim', !settled && revealed>-1 && i!==revealed);
   });
 
-  /* sequential highlight */
-  var act=-1;
-  if(p>0.44 && p<0.86) act=Math.min(5,Math.floor(((p-0.44)/0.42)*6));
-  planeEls.forEach(function(pl,i){
-    pl.classList.toggle('act',i===act);
-    pl.classList.toggle('dim',act>-1&&i!==act);
-  });
-  if(p>0.40){ [].slice.call(document.querySelectorAll('.nl')).forEach(function(l){l.style.strokeDashoffset='0';}); }
+  /* ecosystem graph draws itself when its own plane arrives */
+  if(revealed>=N-1){ [].slice.call(document.querySelectorAll('.nl')).forEach(function(l){l.style.strokeDashoffset='0';}); }
 
-  var ci=(p>=0.88)?7:(act>-1?act+1:0);
+  var ci = settled ? 7 : (revealed>-1 ? revealed+1 : 0);
   if(ci!==lastSock){ lastSock=ci; var c=$('#sockCap');
     c.style.transition='opacity .35s var(--ease)'; c.style.opacity=0;
     setTimeout(function(){ c.innerHTML=SOCKCAP[ci]; c.style.opacity=1; },170); }
 
-  var gp=clamp((p-0.87)/0.07,0,1);
+  var gp=clamp((p-(START+N*STEP))/0.06,0,1);
   govbar.style.opacity=gp; govbar.style.transform='translate(-50%,'+(20-20*gp)+'px)';
-  var ai=clamp(Math.floor(((p-0.44)/0.44)*4),-1,3);
+  /* building-type axis fills as the plane above it arrives */
+  var ai = revealed>-1 ? Number(planeEls[revealed].dataset.axis) : -1;
   axisEls.forEach(function(a,i){ a.classList.toggle('on', i<=ai); });
 }
 
