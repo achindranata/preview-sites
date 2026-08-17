@@ -1096,7 +1096,7 @@ h2.big{font-size:clamp(34px,5vw,66px)}
       <div class="eqpart harn">
         <div class="lab">What you actually build</div>
         <h3>The harness</h3>
-        <p>Everything you wrap around the model: instructions, knowledge, tools and skills. Select each one to see what it does — and what Copilot Chat (Basic) gives you.</p>
+        <p>Everything you wrap around the model: instructions, knowledge, tools and skills — four equal parts of the harness. Together they turn a general assistant into one that does your job, your way. Select each to see what it does.</p>
         <div class="hbits" id="hbits">
           <button class="hbit on" data-h="inst">Instructions</button>
           <button class="hbit" data-h="know">Knowledge</button>
@@ -1165,8 +1165,8 @@ h2.big{font-size:clamp(34px,5vw,66px)}
         <div class="agsec">
           <div class="agsh">Knowledge</div>
           <div class="agdesc">Choose the sources your agent will use to generate responses.</div>
-          <div class="agrow">Add files, meetings, chats, emails and websites<span class="rsub">Not available on Copilot Chat (Basic) — attach your files at the prompt instead</span><span class="agtog"></span></div>
-          <div class="agnote">Left empty on purpose. This month's files are attached at runtime.</div>
+          <div class="agrow">Add files, meetings, chats, emails and websites<span class="rsub">Wire in the sources the agent should always have</span><span class="agtog"></span></div>
+          <div class="agnote">Left empty on purpose — this month's files change every month, so they are attached at the prompt instead.</div>
         </div>
 
         <div class="agsec" style="margin-bottom:0">
@@ -1623,17 +1623,16 @@ applyIM();
   if(!bits.length) return;
   var out=$('#hout');
   var H={
-    inst:'<span class="rtag">Instructions · available on Basic</span><b>The plain-language brief you write once.</b> Tone, rules, and \u2014 for our case \u2014 the exact structure every report must follow. This is where almost all of the value sits, and it is free of any licence gate. <b>Everything in the agent below is instructions and nothing else.</b>',
-    know:'<span class="rtag">Knowledge · not on Basic</span><b>Files wired into the agent at build time</b> \u2014 a SharePoint folder the agent can always search. <span class="warn">In Copilot Chat (Basic), you cannot attach knowledge to an agent you build.</span> The workaround is the point of this case: <b>attach the cloud files at runtime instead</b>, in the prompt. Build time gives you relevance across a library; runtime attachment gives you completeness on the few files you hand it \u2014 which is exactly what compiling a report needs.',
-    tool:'<span class="rtag">Tools · partly on Basic</span><b>What the agent can do, not just what it knows.</b> Producing a Word document, a spreadsheet or a deck is a tool call \u2014 which is why our agent can hand back a real .docx. Deeper connectors into line-of-business systems are where you graduate to Copilot Studio.',
-    skill:'<span class="rtag">Skills · the next step up</span><b>Reusable procedures the agent can call.</b> Useful once one agent is doing several related jobs. For a first agent, skip it \u2014 clear instructions beat a clever skill nearly every time.'
+    inst:'<span class="rtag">Instructions</span><b>The plain-language brief you write once.</b> Role, tone, rules \u2014 and, for our case, the exact structure every report must follow. Write it the way you would brief a new colleague: be specific, put things in order, and say what to do when something is missing.',
+    know:'<span class="rtag">Knowledge</span><b>The sources the agent can always reach.</b> Files, folders or sites wired in when you build it, so every conversation starts already grounded. Wire in what stays the same \u2014 the template, the policy, the standing library; attach at the prompt what changes each time, like this month\u2019s files.',
+    tool:'<span class="rtag">Tools</span><b>What the agent can do, not just what it knows.</b> Writing a Word document, building a spreadsheet or a deck, creating an image, reaching into a line-of-business system \u2014 each one is a tool the agent calls. Tools are what turn an answer into something you can actually send.',
+    skill:'<span class="rtag">Skills</span><b>Reusable procedures the agent can follow.</b> One named way of doing one job \u2014 the steps, the checks and the format \u2014 applied consistently whenever that job comes up. Useful the moment a single agent handles several related tasks.'
   };
   function show(b){
     bits.forEach(function(x){ x.classList.toggle('on', x===b); });
     out.innerHTML = H[b.dataset.h] || '';
   }
   bits.forEach(function(b){ b.addEventListener('click',function(){ show(b); }); });
-  bits[1].classList.add('off'); 
   show(bits[0]);
 })();
 
