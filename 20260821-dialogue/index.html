@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Hands-On AI for Policy Makers — Prompt Engineering</title>
+<style>
+:root{
+  --ink:#1B1B1F; --ink2:#43434D; --ink3:#6E6E7A; --line:rgba(27,27,31,.10);
+  --bg:#FAFAFC; --bg2:#F1F2F7;
+  --goal:#0070C0; --ctx:#00A38F; --src:#B4009E; --exp:#E07B00;
+  --grad:linear-gradient(90deg,#0070C0,#00A38F,#B4009E,#E07B00);
+  --grad2:linear-gradient(120deg,#0070C0,#00A38F 38%,#B4009E 70%,#E07B00);
+  --ease:cubic-bezier(.22,1,.36,1);
+  --card:rgba(255,255,255,.72);
+  --shadow:0 22px 60px rgba(30,40,80,.09), 0 2px 8px rgba(30,40,80,.04);
+  --maxw:1100px;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth;overflow-x:clip;scroll-snap-type:y proximity}
+body{margin:0;background:var(--bg);color:var(--ink);overflow-x:clip;
+  font-family:"Segoe UI Variable Display","Segoe UI",Inter,system-ui,-apple-system,Arial,sans-serif;
+  -webkit-font-smoothing:antialiased}
+h1,h2,h3,h4{margin:0;letter-spacing:-.02em;line-height:1.1;font-weight:600}
+p{margin:0;line-height:1.62;color:var(--ink2)}
+.wrap{max-width:var(--maxw);margin:0 auto;padding:0 40px;position:relative;z-index:2;width:100%}
+.gt{background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent}
+
+#bar{position:fixed;top:0;left:0;height:3px;width:100%;transform-origin:0 50%;transform:scaleX(0);
+  background:var(--grad);z-index:9999}
+#nav{position:fixed;top:0;left:0;right:0;height:56px;display:flex;align-items:center;justify-content:space-between;
+  padding:0 28px;z-index:900;transition:background .4s var(--ease),box-shadow .4s var(--ease)}
+#nav.solid{background:rgba(250,250,252,.78);backdrop-filter:blur(20px) saturate(180%);box-shadow:0 1px 0 var(--line)}
+#nav .brand{font-size:13px;font-weight:600;letter-spacing:-.01em}
+#nav .who{font-size:11.5px;color:var(--ink3)}
+#dots{position:fixed;right:18px;top:50%;transform:translateY(-50%);z-index:900;display:flex;flex-direction:column;gap:11px}
+#dots button{all:unset;cursor:pointer;width:8px;height:8px;border-radius:50%;background:rgba(27,27,31,.16);
+  transition:all .4s var(--ease);position:relative}
+#dots button:hover{background:rgba(27,27,31,.4);transform:scale(1.3)}
+#dots button.on{background:var(--goal);box-shadow:0 0 0 4px rgba(0,112,192,.15);transform:scale(1.25)}
+#dots button span{position:absolute;right:20px;top:50%;transform:translate(6px,-50%);white-space:nowrap;font-size:11px;
+  color:var(--ink2);background:rgba(255,255,255,.95);padding:4px 10px;border-radius:8px;
+  box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:all .35s var(--ease)}
+#dots button:hover span{opacity:1;transform:translate(0,-50%)}
+#dots.dark button{background:rgba(255,255,255,.3)}
+#dots.dark button.on{background:#fff;box-shadow:0 0 0 4px rgba(255,255,255,.2)}
+
+section{position:relative;overflow-x:clip;min-height:100vh;display:flex;align-items:center;
+  padding:96px 0 76px;scroll-snap-align:start}
+.blob{position:absolute;border-radius:50%;filter:blur(90px);opacity:.42;pointer-events:none;z-index:0}
+.eyebrow{display:inline-flex;align-items:center;gap:9px;font-size:11.5px;font-weight:600;letter-spacing:.14em;
+  text-transform:uppercase;color:var(--ink3);margin-bottom:16px}
+.eyebrow::before{content:"";width:24px;height:2px;border-radius:2px;background:var(--grad)}
+h2.big{font-size:clamp(30px,4.4vw,54px)}
+.lede{font-size:clamp(15px,1.3vw,18px);max-width:660px;margin-top:18px;color:var(--ink2)}
+.rv{opacity:0;transform:translateY(30px);filter:blur(5px);
+  transition:opacity .85s var(--ease),transform .85s var(--ease),filter .85s var(--ease)}
+.rv.in{opacity:1;transform:none;filter:none}
+.d1{transition-delay:.07s}.d2{transition-delay:.14s}.d3{transition-delay:.21s}
+.d4{transition-delay:.28s}.d5{transition-delay:.35s}.d6{transition-delay:.42s}
+
+.card{background:var(--card);backdrop-filter:blur(18px) saturate(160%);border:1px solid rgba(255,255,255,.9);
+  border-radius:18px;box-shadow:var(--shadow);padding:24px;
+  transition:transform .45s var(--ease),box-shadow .45s var(--ease)}
+.card:hover{transform:translateY(-6px);box-shadow:0 30px 70px rgba(30,40,80,.13)}
+.dark{background:#0B1020;color:#fff}
+.dark p{color:rgba(255,255,255,.72)}
+.dark .eyebrow{color:rgba(255,255,255,.6)}
+.dark .card{background:rgba(255,255,255,.06);border-color:rgba(255,255,255,.12);box-shadow:none}
+.dark .card p{color:rgba(255,255,255,.7)}
+
+/* ---------- GCSE tokens ---------- */
+.tg{color:var(--goal)} .tc{color:var(--ctx)} .ts{color:var(--src)} .te{color:var(--exp)}
+.legend{display:flex;flex-wrap:wrap;gap:8px;margin-top:22px}
+.lg{display:inline-flex;align-items:center;gap:7px;border:1.5px solid var(--c);color:var(--c);
+  background:#fff;border-radius:20px;padding:5px 14px;font-size:12px;font-weight:700;letter-spacing:.01em}
+.lg i{width:7px;height:7px;border-radius:50%;background:var(--c);display:inline-block}
+.lg.g{--c:var(--goal)}.lg.c{--c:var(--ctx)}.lg.s{--c:var(--src)}.lg.e{--c:var(--exp)}
+.dark .lg{background:transparent}
+
+/* ---------- prompt block ---------- */
+.prompt{position:relative;background:#fff;border:1px solid var(--line);border-radius:16px;
+  padding:20px 22px 18px;box-shadow:0 10px 34px rgba(30,40,80,.07);margin-top:16px}
+.prompt .plab{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:11px}
+.prompt .pname{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3)}
+.prompt .ptext{font-family:"Cascadia Mono",Consolas,"SF Mono",Menlo,monospace;font-size:14px;line-height:1.85;
+  color:var(--ink);word-break:break-word}
+.prompt.weak{background:#FBFBFD;border-style:dashed}
+.prompt.weak .ptext{color:var(--ink3)}
+.copy{all:unset;cursor:pointer;display:inline-flex;align-items:center;gap:6px;font-size:11.5px;font-weight:600;
+  color:var(--ink3);border:1px solid var(--line);border-radius:9px;padding:5px 11px;background:#fff;
+  transition:all .3s var(--ease);white-space:nowrap;flex-shrink:0}
+.copy:hover{color:var(--goal);border-color:var(--goal);background:rgba(0,112,192,.05)}
+.copy.done{color:#0a8f4d;border-color:#0a8f4d;background:rgba(10,143,77,.07)}
+.copy svg{width:13px;height:13px;flex-shrink:0}
+/* attachment chip */
+.att{display:inline-flex;align-items:center;gap:6px;background:var(--src);
+  color:#fff;border-radius:8px;padding:3px 11px 3px 9px;font-weight:700;
+  font-size:12.5px;white-space:nowrap;font-family:inherit;letter-spacing:.01em;
+  box-shadow:0 3px 12px rgba(180,0,158,.42), 0 0 0 3px rgba(180,0,158,.16);
+  position:relative;top:-1px;animation:attpulse 2.8s var(--ease) infinite}
+.att svg{width:12px;height:12px;flex-shrink:0}
+@keyframes attpulse{
+  0%,100%{box-shadow:0 3px 12px rgba(180,0,158,.42), 0 0 0 3px rgba(180,0,158,.16)}
+  50%{box-shadow:0 3px 14px rgba(180,0,158,.5), 0 0 0 7px rgba(180,0,158,.08)}
+}
+@media (prefers-reduced-motion:reduce){ .att{animation:none} }
+.needs{display:inline-flex;align-items:center;gap:5px;background:rgba(180,0,158,.1);
+  border:1px solid rgba(180,0,158,.35);color:var(--src);border-radius:20px;padding:3px 10px;
+  font-size:10.5px;font-weight:700;letter-spacing:.07em;text-transform:uppercase;white-space:nowrap}
+.needs svg{width:11px;height:11px}
+.prompt.hasfile{border-left:3px solid var(--src)}
+/* fill-in placeholder */
+.ph{background:rgba(27,27,31,.06);border-bottom:1.5px dotted currentColor;border-radius:4px;
+  padding:0 5px;font-style:italic;opacity:.92}
+.tip{margin-top:14px;font-size:13.5px;color:var(--ink3);font-style:italic;display:flex;gap:9px;align-items:flex-start}
+.tip b{font-style:normal;color:var(--exp);font-weight:700;flex-shrink:0}
+
+/* ---------- s15 builder ---------- */
+.bwrap{display:grid;grid-template-columns:1fr 1fr;gap:34px;margin-top:34px;align-items:start}
+.ings{display:grid;grid-template-columns:1fr 1fr;gap:14px}
+.ing{background:#fff;border:1px solid var(--line);border-radius:16px;padding:18px 18px 16px;cursor:pointer;
+  transition:all .45s var(--ease);border-top:3px solid var(--c);position:relative}
+.ing.g{--c:var(--goal)}.ing.c{--c:var(--ctx)}.ing.s{--c:var(--src)}.ing.e{--c:var(--exp)}
+.ing:hover{transform:translateY(-4px);box-shadow:0 18px 44px rgba(30,40,80,.12)}
+.ing.on{box-shadow:0 0 0 2px var(--c),0 18px 44px rgba(30,40,80,.14);transform:translateY(-4px)}
+.ing .pill{display:inline-block;background:var(--c);color:#fff;font-weight:700;font-size:11.5px;
+  letter-spacing:.06em;text-transform:uppercase;border-radius:20px;padding:4px 12px}
+.ing .q{margin:12px 0 0;font-size:14.5px;font-weight:600;line-height:1.4;color:var(--ink)}
+.ing .tick{position:absolute;top:16px;right:16px;width:20px;height:20px;border-radius:50%;
+  border:1.5px solid var(--line);display:grid;place-items:center;transition:all .35s var(--ease)}
+.ing.on .tick{background:var(--c);border-color:var(--c)}
+.ing .tick svg{width:11px;height:11px;opacity:0;transition:opacity .3s}
+.ing.on .tick svg{opacity:1}
+.bout{background:#fff;border:1px solid var(--line);border-radius:18px;padding:24px;
+  box-shadow:0 14px 44px rgba(30,40,80,.08);min-height:250px;display:flex;flex-direction:column}
+.bout .bh{font-size:11px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--ink3);
+  margin-bottom:14px;display:flex;justify-content:space-between;align-items:center}
+.bout .ptext{flex:1}
+#bph{color:var(--ink3);font-style:italic;font-family:inherit;font-size:14px}
+.seg{display:inline;opacity:0;filter:blur(4px);transition:opacity .55s var(--ease),filter .55s var(--ease)}
+.seg.in{opacity:1;filter:none}
+#bnote{margin-top:16px;font-size:13.5px;color:var(--ink2);line-height:1.6;min-height:42px;
+  padding-top:14px;border-top:1px solid var(--line)}
+#bnote:empty{border:0;padding:0;min-height:0}
+.breset{all:unset;cursor:pointer;font-size:11.5px;color:var(--ink3);text-decoration:underline;text-underline-offset:3px}
+.breset:hover{color:var(--goal)}
+
+/* ---------- generic grids ---------- */
+.g2{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:30px}
+.g3{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;margin-top:30px}
+.tasks{display:grid;grid-template-columns:repeat(3,1fr);gap:14px;margin-top:30px}
+.task{background:#fff;border:1px solid var(--line);border-radius:15px;padding:18px;
+  transition:all .45s var(--ease);cursor:default}
+.task:hover{transform:translateY(-5px);box-shadow:0 18px 44px rgba(30,40,80,.11);border-color:transparent}
+.task h4{font-size:14.5px;color:var(--goal);margin-bottom:9px}
+.task .ex{font-family:"Cascadia Mono",Consolas,monospace;font-size:12.5px;color:var(--ink2);line-height:1.6}
+.styles{display:grid;grid-template-columns:1fr 1fr;gap:11px;margin-top:26px}
+.sty{background:#fff;border:1px solid var(--line);border-left:3px solid var(--exp);border-radius:12px;
+  padding:13px 16px;font-family:"Cascadia Mono",Consolas,monospace;font-size:13.5px;color:var(--exp);
+  transition:all .4s var(--ease)}
+.sty:hover{transform:translateX(5px);box-shadow:0 10px 28px rgba(30,40,80,.09)}
+.chain{display:flex;align-items:center;gap:12px;margin-top:26px;flex-wrap:wrap}
+.chain .ch{background:#fff;border:1px solid var(--line);border-radius:13px;padding:12px 16px;font-size:13.5px;
+  flex:1;min-width:180px}
+.chain .ch b{display:block;font-size:11px;letter-spacing:.09em;text-transform:uppercase;color:var(--exp);margin-bottom:5px}
+.chain .arw{color:var(--ink3);font-size:18px;flex-shrink:0}
+
+/* compare */
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:18px;margin-top:26px}
+.cmp .side{background:#fff;border:1px solid var(--line);border-radius:16px;padding:20px;position:relative}
+.cmp .side.bad{border-color:rgba(200,60,60,.32);background:#FFFAFA}
+.cmp .side.good{border-color:rgba(10,143,77,.32);background:#FAFFFC}
+.cmp .side .vb{font-size:11px;font-weight:700;letter-spacing:.09em;text-transform:uppercase;margin-bottom:10px}
+.cmp .side.bad .vb{color:#C2410C}.cmp .side.good .vb{color:#0a8f4d}
+.cmp .side .txt{font-family:"Cascadia Mono",Consolas,monospace;font-size:13.5px;line-height:1.7}
+mark{background:rgba(224,123,0,.2);color:inherit;border-radius:3px;padding:0 3px;font-weight:700}
+
+/* worked example */
+.ex4{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin:18px 0}
+.ex4 .e{border-top:3px solid var(--c);background:#fff;border-radius:12px;padding:13px 14px;
+  border:1px solid var(--line);border-top:3px solid var(--c)}
+.ex4 .e.g{--c:var(--goal)}.ex4 .e.c{--c:var(--ctx)}.ex4 .e.s{--c:var(--src)}.ex4 .e.e{--c:var(--exp)}
+.ex4 .e b{display:block;font-size:10.5px;letter-spacing:.09em;text-transform:uppercase;color:var(--c);margin-bottom:6px}
+.ex4 .e span{font-size:12.5px;color:var(--ink2);line-height:1.5}
+.exh{font-size:17px;font-weight:600;margin-top:8px}
+
+footer{padding:60px 0 70px;text-align:center;color:var(--ink3);font-size:12.5px;background:var(--bg2)}
+@media(max-width:900px){
+  .bwrap,.g2,.cmp,.styles{grid-template-columns:1fr}
+  .tasks,.g3,.ex4{grid-template-columns:1fr 1fr}
+  .wrap{padding:0 24px}
+  #dots{display:none}
+  section{min-height:auto;padding:76px 0 60px}
+}
+@media(max-width:600px){ .tasks,.g3,.ex4,.ings{grid-template-columns:1fr} }
+@media print{ section{min-height:auto;page-break-after:always;padding:30px 0} .rv{opacity:1;transform:none;filter:none} #dots,#nav,#bar{display:none} }
+@media (prefers-reduced-motion:reduce){ *{animation:none!important;transition-duration:.01ms!important} .rv{opacity:1;transform:none;filter:none} }
+</style>
+</head>
+<body>
+
+<div id="bar"></div>
+<div id="nav">
+  <div class="brand">Hands-On AI for Policy Makers</div>
+  <div class="who">Session 4 &middot; ASEAN&ndash;EAEU Dialogue &middot; 21 Aug 2026</div>
+</div>
+<div id="dots"></div>
+
+<!-- ========== 13 ========== -->
+<section data-nav="Start" class="dark" id="s13" style="background:radial-gradient(ellipse 90% 70% at 50% 35%,#111a33,#0B1020 62%,#080C18)">
+  <div class="blob" style="width:520px;height:520px;left:-8%;top:12%;background:#0070C0;opacity:.22"></div>
+  <div class="blob" style="width:460px;height:460px;right:-6%;bottom:6%;background:#B4009E;opacity:.18"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">Part 2 &middot; Hands-on</div>
+    <h2 class="big rv d1">Prompt Engineering<br><span class="gt">Best Practices</span></h2>
+    <p class="lede rv d2">Four ingredients, six habits, and a set of prompts you can run on your own documents today. Everything on the following pages is copyable &mdash; and everything is yours to adapt.</p>
+    <div class="legend rv d3">
+      <span class="lg g"><i></i>Goal</span>
+      <span class="lg c"><i></i>Context</span>
+      <span class="lg s"><i></i>Source</span>
+      <span class="lg e"><i></i>Expectations</span>
+    </div>
+    <p class="lede rv d4" style="font-size:14px;opacity:.75;margin-top:26px">Scroll, or use the dots on the right.</p>
+  </div>
+</section>
+
+<!-- ========== 14 ========== -->
+<section data-nav="What to ask" id="s14">
+  <div class="blob" style="width:480px;height:480px;right:-10%;top:0;background:#00A38F;opacity:.16"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">The art and science of prompting &middot; 1</div>
+    <h2 class="big rv d1">Tell Copilot what you need</h2>
+    <p class="lede rv d2">Prompts are how you ask Copilot to do something for you &mdash; creating, summarizing, editing, or transforming. Think about prompting like having a conversation: plain but clear language, and the context you would give an assistant.</p>
+    <div class="tasks">
+      <div class="task card rv d1"><h4>Learn about projects and concepts</h4><div class="ex">&ldquo;What is <span class="ph">Project X</span> and who are the key stakeholders working on it?&rdquo;</div></div>
+      <div class="task card rv d2"><h4>Edit text</h4><div class="ex">&ldquo;Check this product launch rationale for inconsistencies.&rdquo;</div></div>
+      <div class="task card rv d3"><h4>Transform documents</h4><div class="ex">&ldquo;Transform this FAQ doc into a 10-slide onboarding guide.&rdquo;</div></div>
+      <div class="task card rv d4"><h4>Summarize information</h4><div class="ex">&ldquo;Write a session abstract of this <span class="ph">presentation</span>.&rdquo;</div></div>
+      <div class="task card rv d5"><h4>Create engaging content</h4><div class="ex">&ldquo;Create a value proposition for <span class="ph">Product X</span>.&rdquo;</div></div>
+      <div class="task card rv d6"><h4>Catch-up on missed items</h4><div class="ex">&ldquo;Provide a summary of the updates and action items on <span class="ph">Project X</span>.&rdquo;</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 15 — INTERACTIVE ========== -->
+<section data-nav="Four ingredients" id="s15" style="background:var(--bg2)">
+  <div class="blob" style="width:560px;height:560px;left:-12%;bottom:-10%;background:#0070C0;opacity:.14"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">The art and science of prompting &middot; 2</div>
+    <h2 class="big rv d1">Include the right <span class="gt">ingredients</span></h2>
+    <p class="lede rv d2">To get the best response, focus on four key elements. <b>Click each ingredient below</b> to build a real prompt one piece at a time &mdash; and watch what each one adds.</p>
+
+    <div class="bwrap">
+      <div class="ings rv d3">
+        <div class="ing g" data-k="g"><span class="pill">Goal</span><div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div><p class="q">What response do you want from Copilot?</p></div>
+        <div class="ing c" data-k="c"><span class="pill">Context</span><div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div><p class="q">Why do you need it and who is involved?</p></div>
+        <div class="ing s" data-k="s"><span class="pill">Source</span><div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div><p class="q">Which information sources or samples should Copilot use?</p></div>
+        <div class="ing e" data-k="e"><span class="pill">Expectations</span><div class="tick"><svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="3.5"><path d="M20 6L9 17l-5-5"/></svg></div><p class="q">How should Copilot respond to best meet your expectations?</p></div>
+      </div>
+
+      <div class="bout rv d4">
+        <div class="bh"><span>Your prompt, so far</span><button class="breset" id="breset">Reset</button></div>
+        <div class="ptext" id="bbody">
+          <span id="bph">Click an ingredient to start building&hellip;</span><span class="seg tg" data-k="g">Generate 3&ndash;5 bullet points to prepare me for a meeting with <span class="ph">XXX</span> to discuss their &ldquo;<span class="ph">policy name</span>&rdquo; policy. </span><span class="seg tc" data-k="c">I need to get up to speed quickly before the meeting. </span><span class="seg ts" data-k="s">Focus on Email and Teams chats since June. </span><span class="seg te" data-k="e">Please use simple language.</span>
+        </div>
+        <div id="bnote"></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 16 ========== -->
+<section data-nav="Keep going" id="s16">
+  <div class="blob" style="width:440px;height:440px;right:-8%;top:14%;background:#B4009E;opacity:.13"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">The art and science of prompting &middot; 3</div>
+    <h2 class="big rv d1">Keep the conversation going</h2>
+    <p class="lede rv d2">Following up on your prompts helps you collaborate with Copilot, to gain more useful, tailored responses. You are never stuck with the first answer.</p>
+    <div class="tasks">
+      <div class="task card rv d1"><h4>Generating content ideas</h4><div class="ex" style="font-family:inherit">Lead with broader requests, then give specific details about the content.</div></div>
+      <div class="task card rv d2"><h4>Enabling insightful meetings</h4><div class="ex" style="font-family:inherit">Request a meeting recap, then ask for more information about what you should know.</div></div>
+      <div class="task card rv d3"><h4>Storytelling assistance</h4><div class="ex" style="font-family:inherit">Ask Copilot to write a story, then guide it by giving more specific, relevant details.</div></div>
+      <div class="task card rv d4"><h4>Gaining insights</h4><div class="ex" style="font-family:inherit">Ask for a summary of a specific file, then ask relevant questions to gain deeper insights.</div></div>
+      <div class="task card rv d5"><h4>Translating languages</h4><div class="ex" style="font-family:inherit">Ask Copilot to translate a sentence into a supported language, then ask for more context or a regional dialect.</div></div>
+      <div class="task card rv d6"><h4>Solving technical problems</h4><div class="ex" style="font-family:inherit">Present a technical problem, then narrow it down, or ask for step-by-step guidance.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 17 ========== -->
+<section data-nav="Best practices" class="dark" id="s17" style="background:radial-gradient(ellipse 80% 70% at 50% 40%,#131c36,#0B1020 65%,#080C18)">
+  <div class="blob" style="width:520px;height:520px;left:-6%;bottom:0;background:#E07B00;opacity:.16"></div>
+  <div class="wrap" style="text-align:center">
+    <div class="eyebrow rv" style="justify-content:center">Six habits</div>
+    <h2 class="big rv d1">Prompt Writing<br><span class="gt">Best Practices</span></h2>
+    <p class="lede rv d2" style="margin:22px auto 0">Every prompt from here is colour-coded by ingredient, shows you exactly where a file gets attached, and can be copied straight into Copilot.</p>
+    <div class="legend rv d3" style="justify-content:center">
+      <span class="lg g"><i></i>Goal</span>
+      <span class="lg c"><i></i>Context</span>
+      <span class="lg s"><i></i>Source</span>
+      <span class="lg e"><i></i>Expectations</span>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 18 ========== -->
+<section data-nav="Include details" id="s18">
+  <div class="blob" style="width:460px;height:460px;left:-10%;top:8%;background:#0070C0;opacity:.13"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">Best practice 1</div>
+    <h2 class="big rv d1">Include details</h2>
+    <p class="lede rv d2">Try both prompts in Copilot and compare the responses. Which one gave you a richer, more usable briefing note?</p>
+
+    <div class="prompt weak rv d3">
+      <div class="plab"><span class="pname">Prompt 1 &middot; thin</span>
+        <button class="copy" data-copy="p18a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p18a"><span class="tg">Write a briefing note about digital economy cooperation.</span></div>
+    </div>
+
+    <div class="prompt rv d4">
+      <div class="plab"><span class="pname">Prompt 2 &middot; all four ingredients</span>
+        <button class="copy" data-copy="p18b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p18b"><span class="tg">Craft a 1,000-word briefing note </span><span class="tc">for senior officials attending an interregional <span class="ph">including regions / countries</span> dialogue on digital cooperation, </span><span class="tg">explaining the significance and benefits of cross-border digital trade facilitation, such as mutual recognition of digital identity and paperless customs. </span><span class="ts">Draw on published intergovernmental sources and real regional examples. </span><span class="te">Include the main implementation challenges, and conclude with three recommended next steps for a national digital agency.</span></div>
+      <div class="tip"><b>Tip</b><span>The second prompt works because it names the audience, the sources, and the shape of the answer.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 19 ========== -->
+<section data-nav="Be specific" id="s19" style="background:var(--bg2)">
+  <div class="blob" style="width:440px;height:440px;right:-8%;bottom:4%;background:#E07B00;opacity:.14"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">Best practice 2</div>
+    <h2 class="big rv d1">Provide specific instructions</h2>
+    <p class="lede rv d2">Copilot is built to take action, so telling it what <b>to do</b> &mdash; or what <b>not to do</b> &mdash; can be very effective.</p>
+
+    <div class="prompt rv d3">
+      <div class="plab"><span class="pname">Prompt 1</span>
+        <button class="copy" data-copy="p19a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p19a"><span class="tg">Write an overview of how AI can improve efficiency in public administration. </span><span class="te">Generate 3 bullet points.</span></div>
+    </div>
+
+    <div class="prompt rv d4">
+      <div class="plab"><span class="pname">Prompt 2 &middot; with a negative instruction</span>
+        <button class="copy" data-copy="p19b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p19b"><span class="tg">Write a 3-day agenda for a national capacity-building workshop <span class="ph">for country / region</span> on digital government </span><span class="tc">for civil servants from two ministries with mixed technical backgrounds. </span><span class="te">Don&rsquo;t include any vendor product names or pricing.</span></div>
+      <div class="tip"><b>Tip</b><span>A negative instruction &mdash; what NOT to include &mdash; is often the fastest way to narrow an answer.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 20 ========== -->
+<section data-nav="Style &amp; format" id="s20">
+  <div class="blob" style="width:500px;height:500px;left:-10%;bottom:-6%;background:#E07B00;opacity:.13"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">Best practice 3</div>
+    <h2 class="big rv d1">Provide a style or format</h2>
+    <p class="lede rv d2">Copilot can use style information if you give it in the prompt. This makes the output easier to use &mdash; or saves you a formatting step entirely. Append any of these to a prompt:</p>
+    <div class="styles">
+      <div class="sty rv d1">&hellip;format it as a table with one row per clause</div>
+      <div class="sty rv d1">&hellip;give it as a bullet list a minister can read in two minutes</div>
+      <div class="sty rv d2">&hellip;make every statutory or treaty reference bold</div>
+      <div class="sty rv d2">&hellip;write it in the style of a formal note verbale</div>
+      <div class="sty rv d3">&hellip;keep it to one page, plain language, and expand every acronym on first use</div>
+      <div class="sty rv d3">&hellip;give me three versions: one line, one paragraph, one page</div>
+      <div class="sty rv d4">&hellip;use the same section headings as the document I attached</div>
+      <div class="sty rv d4">&hellip;write it so it still reads clearly after translation</div>
+    </div>
+    <div class="tip rv d5" style="margin-top:22px"><b>Tip</b><span>Name the format you will actually paste into &mdash; a table, a bullet list, a one-page note.</span></div>
+  </div>
+</section>
+
+<!-- ========== 21 ========== -->
+<section data-nav="Give examples" id="s21" style="background:var(--bg2)">
+  <div class="blob" style="width:440px;height:440px;right:-9%;top:10%;background:#B4009E;opacity:.13"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">Best practice 4</div>
+    <h2 class="big rv d1">Give examples</h2>
+    <p class="lede rv d2">If you provide examples in your prompt, Copilot uses them as a model for its output. One example of the tone you want does more work than three sentences describing it.</p>
+
+    <div class="prompt rv d3">
+      <div class="plab"><span class="pname">Prompt 1</span>
+        <button class="copy" data-copy="p21a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p21a"><span class="tg">Write a one-sentence public summary of a new cross-border data protection rule </span><span class="tc">for citizens with no legal background, </span><span class="ts">using the following line as inspiration for tone: </span><span class="te">&ldquo;Your data stays yours &mdash; we just make sure it travels safely.&rdquo;</span></div>
+    </div>
+
+    <div class="prompt rv d4">
+      <div class="plab"><span class="pname">Prompt 2</span>
+        <button class="copy" data-copy="p21b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p21b"><span class="tg">Draft three closing lines for a <span class="ph">Minister of X</span>&rsquo;s speech on regional <span class="ph">of country / region</span> digital cooperation, </span><span class="ts">using these two lines as inspiration for tone: </span><span class="te">&ldquo;We are not digitising government. We are rebuilding trust.&rdquo; &ldquo;The test of a digital service is the citizen who almost gave up.&rdquo;</span></div>
+      <div class="tip"><b>Tip</b><span>One example of the tone you want does more than three sentences describing it.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 22 ========== -->
+<section data-nav="Feedback" id="s22">
+  <div class="blob" style="width:460px;height:460px;left:-8%;top:6%;background:#00A38F;opacity:.14"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">Best practice 5</div>
+    <h2 class="big rv d1">Give feedback</h2>
+    <p class="lede rv d2">Some prompts won&rsquo;t give you what you expected first time. Tell Copilot what was wrong and ask again <b>in the same chat</b> &mdash; you are refining, not starting over.</p>
+
+    <div class="chain">
+      <div class="ch card rv d1"><b>Round 1</b>Too general &rarr; ask for specifics</div>
+      <span class="arw rv d2">&rarr;</span>
+      <div class="ch card rv d3"><b>Round 2</b>Add the decision being asked for</div>
+      <span class="arw rv d4">&rarr;</span>
+      <div class="ch card rv d5"><b>Round 3</b>Cut the length, drop the jargon</div>
+    </div>
+
+    <div class="prompt rv d3">
+      <div class="plab"><span class="pname">Prompt 1</span>
+        <button class="copy" data-copy="p22a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p22a"><span class="te">Your answer is too general for a policy audience &mdash; add specific implementation steps and name the responsible institution for each one.</span></div>
+    </div>
+    <div class="prompt rv d4">
+      <div class="plab"><span class="pname">Prompt 2</span>
+        <button class="copy" data-copy="p22b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p22b"><span class="te">Add a closing sentence stating the single decision we are asking the Minister to take.</span></div>
+    </div>
+    <div class="prompt rv d5">
+      <div class="plab"><span class="pname">Prompt 3</span>
+        <button class="copy" data-copy="p22c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p22c"><span class="te">That is closer. Keep the structure, but cut it to half the length and drop the jargon.</span></div>
+      <div class="tip"><b>Tip</b><span>You are not starting over &mdash; keep correcting in the same chat until the answer is usable.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 23 ========== -->
+<section data-nav="Grammar" id="s23" style="background:var(--bg2)">
+  <div class="blob" style="width:420px;height:420px;right:-7%;bottom:8%;background:#0070C0;opacity:.13"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">Best practice 6</div>
+    <h2 class="big rv d1">Mind your grammar!</h2>
+    <p class="lede rv d2">AI is sensitive to grammar and spelling. Punctuation in particular can change the meaning of your request &mdash; and the scope of the answer you get back.</p>
+
+    <div class="cmp">
+      <div class="side bad rv d3">
+        <div class="vb">Without commas</div>
+        <div class="txt tg">Draft talking points on supporting exporters<mark> </mark>small businesses and farmers</div>
+      </div>
+      <div class="side good rv d4">
+        <div class="vb">With commas</div>
+        <div class="txt tg">Draft talking points on supporting exporters<mark>,</mark> small businesses<mark>,</mark> and farmers</div>
+      </div>
+    </div>
+    <p class="lede rv d5" style="margin-top:22px">Without the commas, the first can be read as one category &mdash; &ldquo;exporters&rsquo; small businesses&rdquo; &mdash; and Copilot narrows the output accordingly. Same words, different policy scope.</p>
+    <div class="tip rv d6"><b>Tip</b><span>Read your prompt aloud before you send it. If it is ambiguous to you, it is ambiguous to Copilot.</span></div>
+  </div>
+</section>
+
+<!-- ========== 24 ========== -->
+<section data-nav="Worked examples" id="s24">
+  <div class="blob" style="width:520px;height:520px;left:-10%;top:0;background:#B4009E;opacity:.12"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">Prompt examples</div>
+    <h2 class="big rv d1">Two worked examples</h2>
+    <p class="lede rv d2">Four ingredients, then the finished prompt. Highlighted chips show where <b>you attach your own document</b> &mdash; we supply no sample files.</p>
+
+    <h3 class="exh rv d3" style="margin-top:34px">Example 1 &mdash; harmonising a draft against a regional commitment</h3>
+    <div class="ex4">
+      <div class="e g rv d3"><b>Goal</b><span>Compare a draft national regulation against a regional commitment</span></div>
+      <div class="e c rv d4"><b>Context</b><span>I&rsquo;m a director in a ministry preparing an inter-agency meeting</span></div>
+      <div class="e s rv d5"><b>Source</b><span>A document you attach yourself &mdash; your draft, and the instrument to align it to</span></div>
+      <div class="e e rv d6"><b>Expectations</b><span>Aligned, divergent and missing clauses, with every article cited</span></div>
+    </div>
+    <div class="prompt hasfile rv d6">
+      <div class="plab"><span class="pname">The prompt</span><span class="needs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>Attach a file</span>
+        <button class="copy" data-copy="p24a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p24a"><span class="tc">I&rsquo;m a <span class="ph">your role</span> preparing an inter-agency <span class="ph">mention agencies / parties</span> meeting. </span><span class="ts">Using the two documents I have <span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>attached</span>, </span><span class="tg">compare them clause by clause and show me where they align, where they diverge, and where the draft is silent. </span><span class="te">Present it as a table with the cited article for every row, and flag anything a legal officer must verify.</span></div>
+    </div>
+
+    <h3 class="exh rv" style="margin-top:40px">Example 2 &mdash; picking up a project or portfolio you&rsquo;ve just been moved into</h3>
+    <div class="ex4">
+      <div class="e g rv d1"><b>Goal</b><span>Get across a file fast enough to speak to it</span></div>
+      <div class="e c rv d2"><b>Context</b><span>I was rotated into this portfolio and I have a meeting tomorrow</span></div>
+      <div class="e s rv d3"><b>Source</b><span>A document you attach yourself &mdash; the main policy paper on your new file</span></div>
+      <div class="e e rv d4"><b>Expectations</b><span>Plain language, no jargon, with the practical effect spelled out</span></div>
+    </div>
+    <div class="prompt hasfile rv d5">
+      <div class="plab"><span class="pname">The prompt</span><span class="needs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>Attach a file</span>
+        <button class="copy" data-copy="p24b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p24b"><span class="tc">I was rotated into this <span class="ph">project / portfolio</span> last week and I have an inter-agency <span class="ph">mention agencies / parties</span> meeting tomorrow. </span><span class="ts">Based on the document I have <span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>attached</span>, </span><span class="tg">bring me up to speed on what this policy does and where it stands. </span><span class="te">Use plain language, expand every acronym on first use, and end with the three questions I should be ready to answer in the room.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 25 ========== -->
+<section data-nav="Run these" id="s25" style="background:var(--bg2)">
+  <div class="blob" style="width:520px;height:520px;right:-10%;top:4%;background:#00A38F;opacity:.15"></div>
+  <div class="wrap">
+    <div class="eyebrow rv">Prompt examples &middot; your turn</div>
+    <h2 class="big rv d1">Three to run right now</h2>
+    <p class="lede rv d2">Nothing attached &rarr; your own document &rarr; your whole mailbox. Each one asks more of Copilot than the last. Copy, paste, and change anything in the dotted boxes.</p>
+
+    <div class="prompt rv d3">
+      <div class="plab"><span class="pname">1 &middot; Nothing attached &mdash; Copilot Chat, then Word or PowerPoint</span>
+        <button class="copy" data-copy="p25a"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p25a"><span class="tg">Research how governments <span class="ph">of countries / regions</span> are using AI in public service delivery, then draft a 6-slide deck introducing the topic to senior officials. </span><span class="tc">Assume the audience is non-technical and has not used AI tools before. </span><span class="ts">Use publicly available sources from the last two years and cite them. </span><span class="te">One idea per slide, a plain-language title on each, and end with three questions a government should ask before adopting AI.</span></div>
+    </div>
+
+    <div class="prompt hasfile rv d4">
+      <div class="plab"><span class="pname">2 &middot; Your own document</span><span class="needs"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>Attach a file</span>
+        <button class="copy" data-copy="p25b"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p25b"><span class="ts">Using the document I have <span class="att"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="M21.44 11.05l-9.19 9.19a6 6 0 01-8.49-8.49l9.19-9.19a4 4 0 015.66 5.66l-9.2 9.19a2 2 0 01-2.83-2.83l8.49-8.48"/></svg>attached</span>, </span><span class="tg">summarise it for someone who has never seen it, then pull out the decisions it asks for and anything left unresolved. </span><span class="te">Give me a short summary, decisions with who must take each, and open questions. Say clearly if something I would expect to find is missing.</span></div>
+    </div>
+
+    <div class="prompt rv d5">
+      <div class="plab"><span class="pname">3 &middot; Your whole mailbox &mdash; Copilot in Outlook</span>
+        <button class="copy" data-copy="p25c"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>Copy</button></div>
+      <div class="ptext" id="p25c"><span class="tc">I have been away and I am behind on my correspondence. </span><span class="tg">Look across my mailbox from the last two weeks and tell me what needs my attention. </span><span class="te">Group it into: awaiting my reply, awaiting my decision, and for information only. For each item give the sender, date, one line on the ask, and flag passed deadlines.</span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ========== 26 ========== -->
+<section data-nav="Thank you" class="dark" id="s26" style="background:radial-gradient(ellipse 90% 80% at 50% 40%,#121b35,#0B1020 60%,#080C18)">
+  <div class="blob" style="width:600px;height:600px;left:50%;top:30%;transform:translateX(-50%);background:#0070C0;opacity:.2"></div>
+  <div class="wrap" style="text-align:center">
+    <h2 class="big rv"><span class="gt">Thank you</span></h2>
+    <p class="lede rv d1" style="margin:24px auto 0">Session 4 &middot; AI Custom Ideas &amp; Hands-On Workshop<br>ASEAN&ndash;EAEU Dialogue on Digital Cooperation and Development</p>
+    <p class="lede rv d2" style="margin:30px auto 0;font-size:14px;opacity:.7">Serena Foong &middot; Adelia Chindranata &middot; Widya Listyowulan &middot; Kevianda Kamarullah</p>
+    <div class="legend rv d3" style="justify-content:center;margin-top:34px">
+      <span class="lg g"><i></i>Goal</span>
+      <span class="lg c"><i></i>Context</span>
+      <span class="lg s"><i></i>Source</span>
+      <span class="lg e"><i></i>Expectations</span>
+    </div>
+  </div>
+</section>
+
+<footer>Prompt content from &ldquo;Session 4 AI Custom Ideas &amp; Hands On Workshop.pptx&rdquo;, slides 13&ndash;26. Colour coding follows the deck&rsquo;s own ingredient scheme.</footer>
+
+<script>
+(function(){
+"use strict";
+var RM = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+function $(s,c){ return (c||document).querySelector(s); }
+function all(s,c){ return [].slice.call((c||document).querySelectorAll(s)); }
+
+/* ---- reveal ---- */
+var io = new IntersectionObserver(function(es){
+  es.forEach(function(e){ if(e.isIntersecting){ e.target.classList.add('in'); io.unobserve(e.target); } });
+},{threshold:.12, rootMargin:'0px 0px -5% 0px'});
+all('.rv').forEach(function(x){ io.observe(x); });
+
+/* ---- nav dots ---- */
+var secs = all('section[data-nav]'), dots = $('#dots');
+secs.forEach(function(s){
+  var b = document.createElement('button');
+  b.innerHTML = '<span>' + s.dataset.nav + '</span>';
+  b.addEventListener('click', function(){ s.scrollIntoView({behavior: RM ? 'auto' : 'smooth'}); });
+  dots.appendChild(b);
+});
+var dotEls = all('button', dots);
+
+function onScroll(){
+  var st = window.pageYOffset || document.documentElement.scrollTop;
+  var h = document.documentElement.scrollHeight - window.innerHeight;
+  $('#bar').style.transform = 'scaleX(' + (h > 0 ? st / h : 0) + ')';
+  $('#nav').classList.toggle('solid', st > 40);
+  var mid = st + window.innerHeight * 0.42, cur = 0, isDark = false;
+  secs.forEach(function(s, i){
+    if(s.offsetTop <= mid){ cur = i; }
+  });
+  dotEls.forEach(function(d, i){ d.classList.toggle('on', i === cur); });
+  isDark = secs[cur].classList.contains('dark');
+  dots.classList.toggle('dark', isDark);
+}
+window.addEventListener('scroll', onScroll, {passive:true});
+window.addEventListener('resize', onScroll);
+onScroll();
+
+/* ---- copy prompts ---- */
+function plain(el){
+  var t = el.innerText.replace(/\u00a0/g,' ').replace(/\s+\n/g,'\n').replace(/[ \t]{2,}/g,' ').trim();
+  return t;
+}
+all('.copy').forEach(function(btn){
+  btn.addEventListener('click', function(){
+    var target = document.getElementById(btn.dataset.copy);
+    if(!target) return;
+    var text = plain(target), done = function(){
+      var old = btn.innerHTML;
+      btn.classList.add('done');
+      btn.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><path d="M20 6L9 17l-5-5"/></svg>Copied';
+      setTimeout(function(){ btn.classList.remove('done'); btn.innerHTML = old; }, 1900);
+    };
+    if(navigator.clipboard && navigator.clipboard.writeText){
+      navigator.clipboard.writeText(text).then(done, function(){ fallback(text, done); });
+    } else { fallback(text, done); }
+  });
+});
+function fallback(text, cb){
+  var ta = document.createElement('textarea');
+  ta.value = text; ta.setAttribute('readonly','');
+  ta.style.cssText = 'position:absolute;left:-9999px;top:0';
+  document.body.appendChild(ta); ta.select();
+  try { document.execCommand('copy'); cb(); } catch(e){}
+  document.body.removeChild(ta);
+}
+
+/* ---- slide 15: GCSE builder ---- */
+(function(){
+  var order = ['g','c','s','e'], built = [];
+  var notes = {
+    g: '<b>Goal only.</b> Copilot knows what to make &mdash; but not for whom, from what, or in what shape.',
+    c: '<b>Goal + Context.</b> It now understands why you need it and adjusts the depth accordingly.',
+    s: '<b>Goal + Context + Source.</b> The answer is grounded in your actual material instead of assumption.',
+    e: '<b>All four ingredients.</b> The output arrives in the format you need &mdash; little or no rework.'
+  };
+  var bph = $('#bph'), bnote = $('#bnote');
+  if(!bph) return;
+  function paint(){
+    all('.seg').forEach(function(sg){ sg.classList.toggle('in', built.indexOf(sg.dataset.k) > -1); });
+    all('.ing').forEach(function(b){ b.classList.toggle('on', built.indexOf(b.dataset.k) > -1); });
+    bph.style.display = built.length ? 'none' : 'inline';
+    bnote.innerHTML = built.length ? notes[built[built.length - 1]] : '';
+  }
+  all('.ing').forEach(function(b){
+    b.addEventListener('click', function(){
+      var k = b.dataset.k, i = built.indexOf(k);
+      if(i > -1){ built.splice(i, 1); } else { built.push(k); }
+      built.sort(function(a, z){ return order.indexOf(a) - order.indexOf(z); });
+      paint();
+    });
+  });
+  $('#breset').addEventListener('click', function(){ built = []; paint(); });
+  paint();
+})();
+})();
+</script>
+</body>
+</html>
