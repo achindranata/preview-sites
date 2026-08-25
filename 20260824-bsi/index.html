@@ -318,14 +318,20 @@ table.ref tbody tr{transition:background .25s var(--ease)}
 
 /* ---- slide 10: scoring ---- */
 .scwrap{max-width:1120px}
-.scgrid{display:grid;grid-template-columns:1fr 1fr;grid-template-rows:repeat(3,auto);grid-auto-flow:column;gap:0 34px;border-top:1px solid var(--line)}
-.scq{padding:15px 0 14px;border-bottom:1px solid var(--line)}
-.scq .grp{font-size:9.5px;font-weight:700;letter-spacing:.11em;text-transform:uppercase;color:var(--c);margin:0 0 4px}
-.scq h3{font-size:14.5px;font-weight:600;letter-spacing:-.015em;margin:0 0 3px;color:var(--ink)}
-.scq .ask{font-size:12.2px;line-height:1.45;color:var(--ink2);margin:0 0 9px}
+.sclegend{display:flex;align-items:center;gap:18px;flex-wrap:wrap;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:10px 0;margin-bottom:2px}
+.sclegend .lb{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3)}
+.sclegend ul{display:flex;gap:15px;flex-wrap:wrap;margin:0;padding:0;list-style:none}
+.sclegend li{font-size:12.2px;color:var(--ink2);display:flex;align-items:center;gap:6px}
+.sclegend li b{display:inline-flex;align-items:center;justify-content:center;width:19px;height:19px;border-radius:50%;background:#F1F2F7;border:1px solid var(--line);font-size:10.5px;font-weight:700;color:var(--ink2)}
+.scgrid{display:grid;grid-template-columns:1fr 1fr;gap:0 34px}
+.schalf{padding-top:16px}
+.schead{display:flex;align-items:baseline;justify-content:space-between;gap:10px;padding-bottom:7px;border-bottom:2px solid var(--c)}
+.schead h3{font-size:12px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--c);margin:0}
+.schead .cap{font-size:11.5px;font-weight:600;color:var(--ink3)}
+.scq{padding:13px 0 12px;border-bottom:1px solid var(--line)}
+.scq h4{font-size:13.8px;font-weight:600;letter-spacing:-.012em;margin:0 0 3px;color:var(--ink)}
+.scq .why{font-size:11.8px;line-height:1.45;color:var(--ink3);margin:0 0 9px}
 .scale{display:flex;align-items:center;gap:6px}
-.scale .anc{font-size:10.2px;color:var(--ink3);flex:0 0 auto;max-width:96px;line-height:1.3}
-.scale .anc.r{text-align:right}
 .sc{
   flex:0 0 auto;width:30px;height:28px;border:1px solid var(--line);background:#fff;border-radius:7px;
   font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink3);cursor:pointer;
@@ -334,28 +340,19 @@ table.ref tbody tr{transition:background .25s var(--ease)}
 .sc[aria-pressed="true"]{background:var(--grad2);border-color:transparent;color:#fff;box-shadow:0 8px 20px rgba(122,90,248,.24)}
 .sc:focus-visible{outline:none;box-shadow:0 0 0 3px rgba(122,90,248,.28)}
 .sctotal{
-  display:flex;align-items:center;gap:22px;flex-wrap:wrap;margin-top:18px;
+  display:flex;align-items:center;gap:20px;flex-wrap:wrap;margin-top:18px;
   background:#fff;border:1px solid rgba(122,90,248,.3);border-radius:12px;padding:14px 20px;
   box-shadow:0 10px 28px rgba(122,90,248,.08);
 }
-.sctotal .num{font-size:clamp(24px,2.6vw,34px);font-weight:600;letter-spacing:-.03em;background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1}
-.sctotal .num small{font-size:14px;color:var(--ink3);-webkit-text-fill-color:var(--ink3);font-weight:600;margin-left:3px}
-.sctotal .band{font-size:13.4px;font-weight:600;color:var(--ink);line-height:1.4}
-.sctotal .band span{display:block;font-size:12px;font-weight:400;color:var(--ink2);margin-top:2px}
-.sctotal .weak{font-size:12px;color:var(--ink3);margin-left:auto;text-align:right;line-height:1.4}
-.sctotal .weak b{color:var(--mag);font-weight:600}
-/* ---- slide 11: submission ---- */
-.sub{display:grid;grid-template-columns:1.05fr .95fr;gap:56px;align-items:center;max-width:1060px}
-.subqr{display:flex;flex-direction:column;align-items:center;gap:12px}
-.subqr .frame{background:#fff;border:1px solid var(--line);padding:16px;line-height:0;box-shadow:0 14px 38px rgba(30,20,80,.10)}
-.subqr img{width:min(300px,54vw);height:auto;display:block;image-rendering:pixelated}
-.subqr .cap{font-size:11.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
-.sublink{border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:16px 0;margin:20px 0 0}
-.sublink .lb{font-size:10.5px;font-weight:700;letter-spacing:.12em;text-transform:uppercase;color:var(--ink3);margin:0 0 8px}
-.sublink a{font-size:clamp(14px,1.35vw,17px);font-weight:600;letter-spacing:-.01em;color:var(--ink);text-decoration:none;border-bottom:2px solid rgba(122,90,248,.45);overflow-wrap:anywhere;transition:color .25s var(--ease),border-color .25s var(--ease)}
-.substeps{margin:18px 0 0;padding:0;list-style:none}
-.substeps li{display:flex;gap:11px;align-items:flex-start;font-size:13.4px;line-height:1.5;color:var(--ink2);margin-bottom:9px}
-.substeps li b{flex:0 0 auto;width:20px;height:20px;border-radius:50%;background:var(--grad2);color:#fff;font-size:10.5px;font-weight:700;display:flex;align-items:center;justify-content:center;margin-top:1px}
+.scpart{display:flex;flex-direction:column;gap:1px}
+.scpart .k{font-size:9.5px;font-weight:700;letter-spacing:.1em;text-transform:uppercase;color:var(--ink3)}
+.scpart .v{font-size:19px;font-weight:600;letter-spacing:-.02em;color:var(--c);line-height:1.2}
+.scpart .v small{font-size:12px;color:var(--ink3);font-weight:600}
+.scdiv{width:1px;height:34px;background:var(--line)}
+.sctotal .num{font-size:clamp(22px,2.4vw,30px);font-weight:600;letter-spacing:-.03em;background:var(--grad2);-webkit-background-clip:text;background-clip:text;color:transparent;line-height:1.1}
+.sctotal .num small{font-size:13px;color:var(--ink3);-webkit-text-fill-color:var(--ink3);font-weight:600;margin-left:3px}
+.sctotal .band{font-size:14px;font-weight:600;color:var(--ink);line-height:1.35;margin-left:auto;text-align:right;max-width:300px}
+.sctotal .band span{display:block;font-size:11.8px;font-weight:400;color:var(--ink3);margin-top:2px}
 .screset{
   font-family:inherit;font-size:12.5px;font-weight:600;color:var(--ink3);background:#fff;
   border:1px solid var(--line);border-radius:20px;padding:8px 16px;cursor:pointer;
@@ -481,7 +478,6 @@ nav.dark.solid{background:rgba(11,16,32,.6);box-shadow:0 1px 0 rgba(255,255,255,
   .prilist li:hover{background:rgba(122,90,248,.05)}
   .sc:not([aria-pressed="true"]):hover{transform:translateY(-2px);border-color:var(--vio);color:var(--ink);box-shadow:0 8px 18px rgba(122,90,248,.16)}
   .screset:hover{color:var(--vio);border-color:var(--vio);transform:translateY(-2px)}
-  .sublink a:hover{color:var(--vio);border-color:var(--vio)}
   .pridel:hover{color:var(--mag);border-color:var(--mag);background:#fff}
   .tab:hover{transform:translateY(-2px);color:var(--ink);border-color:var(--vio);box-shadow:0 12px 28px rgba(122,90,248,.16)}
   .tab[aria-selected="true"]:hover{color:#fff;border-color:transparent}
@@ -508,8 +504,6 @@ nav.dark.solid{background:rgba(11,16,32,.6);box-shadow:0 1px 0 rgba(255,255,255,
   .tr .st+.st{padding-left:0;border-left:0;border-top:1px solid var(--line)}
   .pri{grid-template-columns:1fr;gap:22px}
   .scgrid{grid-template-columns:1fr;grid-template-rows:none;grid-auto-flow:row}
-  .sub{grid-template-columns:1fr;gap:28px}
-  .subqr{order:-1;align-items:flex-start}
   .sctotal .weak{margin-left:0;text-align:left;width:100%}
   .reftbl{overflow-x:auto}
   table.ref{min-width:720px}
@@ -1227,18 +1221,18 @@ nav.dark.solid{background:rgba(11,16,32,.6);box-shadow:0 1px 0 rgba(255,255,255,
       </div>
 
       <div class="matwrap">
-        <div class="ylab"><span>Degree of strategic business impact</span></div>
+        <div class="ylab"><span>Business Impact</span></div>
         <div class="mat" id="mat">
           <span class="axhi">High</span>
           <span class="axlo">Low</span>
-          <div class="q tl"><span>Low Hanging Fruit</span></div>
-          <div class="q tr"><span>Quick Wins</span></div>
-          <div class="q bl"><span>Parked</span></div>
-          <div class="q br"><span>Test &amp; Learn</span></div>
+          <div class="q tl"><span>Prioritise &amp; Deploy</span></div>
+          <div class="q tr"><span>Plan &amp; Invest</span></div>
+          <div class="q bl"><span>Explore if capacity allows</span></div>
+          <div class="q br"><span>Deprioritise</span></div>
         </div>
         <div class="xaxis">
           <div class="xscale"><span>1</span><span>2</span><span>3</span><span>4</span><span>5</span></div>
-          <div class="xname"><i>Low</i><span>Engineering Effort</span><i>High</i></div>
+          <div class="xname"><i>Low</i><span>Effort</span><i>High</i></div>
         </div>
       </div>
     </div>
@@ -1252,106 +1246,61 @@ nav.dark.solid{background:rgba(11,16,32,.6);box-shadow:0 1px 0 rgba(255,255,255,
   <div class="wrap">
     <div class="eyebrow rv">Before it goes on the shortlist</div>
     <h2 class="big rv">Use case <span class="gt">scoring</span>.</h2>
-    <p class="lede rv" style="margin-bottom:16px">Score one use case at a time, 1 to 5 on each. A low score is not a rejection — it shows which part still needs work before the case can be owned.</p>
+    <p class="lede rv" style="margin-bottom:14px">Six questions, the same 1–5 scale on each. The first three give a <b>Business Value</b> score, the last three an <b>Implementation Readiness</b> score — which is what places the use case on the quadrant.</p>
 
     <div class="scwrap rv">
+      <div class="sclegend">
+        <span class="lb">Scale</span>
+        <ul><li><b>1</b>Very Low</li><li><b>2</b>Low</li><li><b>3</b>Medium</li><li><b>4</b>High</li><li><b>5</b>Very High</li></ul>
+      </div>
+
       <div class="scgrid">
-        <div class="scq" style="--c:var(--mag)">
-          <p class="grp">Strategic fit</p>
-          <h3>Business objective</h3>
-          <p class="ask">What business objective does this use case enable?</p>
-          <div class="scale">
-            <span class="anc">Very unclear</span>
-            <button class="sc" type="button" data-q="0" data-v="1" aria-pressed="false" aria-label="Business objective: score 1">1</button><button class="sc" type="button" data-q="0" data-v="2" aria-pressed="false" aria-label="Business objective: score 2">2</button><button class="sc" type="button" data-q="0" data-v="3" aria-pressed="false" aria-label="Business objective: score 3">3</button><button class="sc" type="button" data-q="0" data-v="4" aria-pressed="false" aria-label="Business objective: score 4">4</button><button class="sc" type="button" data-q="0" data-v="5" aria-pressed="false" aria-label="Business objective: score 5">5</button>
-            <span class="anc r">Very clear and actionable</span>
+        <div class="schalf" style="--c:var(--mag)">
+          <div class="schead"><h3>Business Value</h3><span class="cap">15 points max</span></div>
+          <div class="scq">
+            <h4>1. How significant is the business impact?</h4>
+            <p class="why">Revenue, cost, productivity, customer experience, risk reduction</p>
+            <div class="scale"><button class="sc" type="button" data-q="0" data-v="1" aria-pressed="false" aria-label="Question 1, score 1">1</button><button class="sc" type="button" data-q="0" data-v="2" aria-pressed="false" aria-label="Question 1, score 2">2</button><button class="sc" type="button" data-q="0" data-v="3" aria-pressed="false" aria-label="Question 1, score 3">3</button><button class="sc" type="button" data-q="0" data-v="4" aria-pressed="false" aria-label="Question 1, score 4">4</button><button class="sc" type="button" data-q="0" data-v="5" aria-pressed="false" aria-label="Question 1, score 5">5</button></div>
+          </div>
+          <div class="scq">
+            <h4>2. How many employees or customers will benefit?</h4>
+            <p class="why">Scale of impact</p>
+            <div class="scale"><button class="sc" type="button" data-q="1" data-v="1" aria-pressed="false" aria-label="Question 2, score 1">1</button><button class="sc" type="button" data-q="1" data-v="2" aria-pressed="false" aria-label="Question 2, score 2">2</button><button class="sc" type="button" data-q="1" data-v="3" aria-pressed="false" aria-label="Question 2, score 3">3</button><button class="sc" type="button" data-q="1" data-v="4" aria-pressed="false" aria-label="Question 2, score 4">4</button><button class="sc" type="button" data-q="1" data-v="5" aria-pressed="false" aria-label="Question 2, score 5">5</button></div>
+          </div>
+          <div class="scq">
+            <h4>3. How much productivity gain is expected?</h4>
+            <p class="why">Time or effort saved through automation or AI assistance</p>
+            <div class="scale"><button class="sc" type="button" data-q="2" data-v="1" aria-pressed="false" aria-label="Question 3, score 1">1</button><button class="sc" type="button" data-q="2" data-v="2" aria-pressed="false" aria-label="Question 3, score 2">2</button><button class="sc" type="button" data-q="2" data-v="3" aria-pressed="false" aria-label="Question 3, score 3">3</button><button class="sc" type="button" data-q="2" data-v="4" aria-pressed="false" aria-label="Question 3, score 4">4</button><button class="sc" type="button" data-q="2" data-v="5" aria-pressed="false" aria-label="Question 3, score 5">5</button></div>
           </div>
         </div>
-        <div class="scq" style="--c:var(--mag)">
-          <p class="grp">Strategic fit</p>
-          <h3>Key results</h3>
-          <p class="ask">How will success be measured — and what key results show progress?</p>
-          <div class="scale">
-            <span class="anc">Vague, not measurable</span>
-            <button class="sc" type="button" data-q="1" data-v="1" aria-pressed="false" aria-label="Key results: score 1">1</button><button class="sc" type="button" data-q="1" data-v="2" aria-pressed="false" aria-label="Key results: score 2">2</button><button class="sc" type="button" data-q="1" data-v="3" aria-pressed="false" aria-label="Key results: score 3">3</button><button class="sc" type="button" data-q="1" data-v="4" aria-pressed="false" aria-label="Key results: score 4">4</button><button class="sc" type="button" data-q="1" data-v="5" aria-pressed="false" aria-label="Key results: score 5">5</button>
-            <span class="anc r">Precise, measurable, aligned to the objective</span>
+        <div class="schalf" style="--c:var(--tea)">
+          <div class="schead"><h3>Implementation Readiness</h3><span class="cap">15 points max</span></div>
+          <div class="scq">
+            <h4>4. How available and accessible is the required data?</h4>
+            <p class="why">The data, documents and systems the use case depends on</p>
+            <div class="scale"><button class="sc" type="button" data-q="3" data-v="1" aria-pressed="false" aria-label="Question 4, score 1">1</button><button class="sc" type="button" data-q="3" data-v="2" aria-pressed="false" aria-label="Question 4, score 2">2</button><button class="sc" type="button" data-q="3" data-v="3" aria-pressed="false" aria-label="Question 4, score 3">3</button><button class="sc" type="button" data-q="3" data-v="4" aria-pressed="false" aria-label="Question 4, score 4">4</button><button class="sc" type="button" data-q="3" data-v="5" aria-pressed="false" aria-label="Question 4, score 5">5</button></div>
           </div>
-        </div>
-        <div class="scq" style="--c:var(--mag)">
-          <p class="grp">Strategic fit</p>
-          <h3>Stakeholder accountable</h3>
-          <p class="ask">Who owns the outcome, and who sponsors the change?</p>
-          <div class="scale">
-            <span class="anc">Don’t know</span>
-            <button class="sc" type="button" data-q="2" data-v="1" aria-pressed="false" aria-label="Accountability: score 1">1</button><button class="sc" type="button" data-q="2" data-v="2" aria-pressed="false" aria-label="Accountability: score 2">2</button><button class="sc" type="button" data-q="2" data-v="3" aria-pressed="false" aria-label="Accountability: score 3">3</button><button class="sc" type="button" data-q="2" data-v="4" aria-pressed="false" aria-label="Accountability: score 4">4</button><button class="sc" type="button" data-q="2" data-v="5" aria-pressed="false" aria-label="Accountability: score 5">5</button>
-            <span class="anc r">Known and named</span>
+          <div class="scq">
+            <h4>5. How easy is integration with existing processes and systems?</h4>
+            <p class="why">Implementation feasibility</p>
+            <div class="scale"><button class="sc" type="button" data-q="4" data-v="1" aria-pressed="false" aria-label="Question 5, score 1">1</button><button class="sc" type="button" data-q="4" data-v="2" aria-pressed="false" aria-label="Question 5, score 2">2</button><button class="sc" type="button" data-q="4" data-v="3" aria-pressed="false" aria-label="Question 5, score 3">3</button><button class="sc" type="button" data-q="4" data-v="4" aria-pressed="false" aria-label="Question 5, score 4">4</button><button class="sc" type="button" data-q="4" data-v="5" aria-pressed="false" aria-label="Question 5, score 5">5</button></div>
           </div>
-        </div>
-        <div class="scq" style="--c:var(--vio)">
-          <p class="grp">Business impact</p>
-          <h3>Strategy alignment and value</h3>
-          <p class="ask">Does it align with the bank’s strategy, and how does it generate value?</p>
-          <div class="scale">
-            <span class="anc">Little alignment or value</span>
-            <button class="sc" type="button" data-q="3" data-v="1" aria-pressed="false" aria-label="Business impact: score 1">1</button><button class="sc" type="button" data-q="3" data-v="2" aria-pressed="false" aria-label="Business impact: score 2">2</button><button class="sc" type="button" data-q="3" data-v="3" aria-pressed="false" aria-label="Business impact: score 3">3</button><button class="sc" type="button" data-q="3" data-v="4" aria-pressed="false" aria-label="Business impact: score 4">4</button><button class="sc" type="button" data-q="3" data-v="5" aria-pressed="false" aria-label="Business impact: score 5">5</button>
-            <span class="anc r">Clear alignment and value</span>
-          </div>
-        </div>
-        <div class="scq" style="--c:var(--blu)">
-          <p class="grp">User desirability</p>
-          <h3>Value to the people who do the work</h3>
-          <p class="ask">What is the appeal to the users — and what change resistance should be expected?</p>
-          <div class="scale">
-            <span class="anc">Low appeal, high resistance</span>
-            <button class="sc" type="button" data-q="4" data-v="1" aria-pressed="false" aria-label="User desirability: score 1">1</button><button class="sc" type="button" data-q="4" data-v="2" aria-pressed="false" aria-label="User desirability: score 2">2</button><button class="sc" type="button" data-q="4" data-v="3" aria-pressed="false" aria-label="User desirability: score 3">3</button><button class="sc" type="button" data-q="4" data-v="4" aria-pressed="false" aria-label="User desirability: score 4">4</button><button class="sc" type="button" data-q="4" data-v="5" aria-pressed="false" aria-label="User desirability: score 5">5</button>
-            <span class="anc r">Strong appeal, low resistance</span>
-          </div>
-        </div>
-        <div class="scq" style="--c:var(--tea)">
-          <p class="grp">Technical feasibility</p>
-          <h3>Feasibility, risk and safeguards</h3>
-          <p class="ask">Does it fit the technology available today, with risks and safeguards manageable?</p>
-          <div class="scale">
-            <span class="anc">Poor fit, unresolved risks</span>
-            <button class="sc" type="button" data-q="5" data-v="1" aria-pressed="false" aria-label="Technical feasibility: score 1">1</button><button class="sc" type="button" data-q="5" data-v="2" aria-pressed="false" aria-label="Technical feasibility: score 2">2</button><button class="sc" type="button" data-q="5" data-v="3" aria-pressed="false" aria-label="Technical feasibility: score 3">3</button><button class="sc" type="button" data-q="5" data-v="4" aria-pressed="false" aria-label="Technical feasibility: score 4">4</button><button class="sc" type="button" data-q="5" data-v="5" aria-pressed="false" aria-label="Technical feasibility: score 5">5</button>
-            <span class="anc r">Good fit, safeguards in place</span>
+          <div class="scq">
+            <h4>6. How ready is the business to adopt this within six months?</h4>
+            <p class="why">Practicality and readiness</p>
+            <div class="scale"><button class="sc" type="button" data-q="5" data-v="1" aria-pressed="false" aria-label="Question 6, score 1">1</button><button class="sc" type="button" data-q="5" data-v="2" aria-pressed="false" aria-label="Question 6, score 2">2</button><button class="sc" type="button" data-q="5" data-v="3" aria-pressed="false" aria-label="Question 6, score 3">3</button><button class="sc" type="button" data-q="5" data-v="4" aria-pressed="false" aria-label="Question 6, score 4">4</button><button class="sc" type="button" data-q="5" data-v="5" aria-pressed="false" aria-label="Question 6, score 5">5</button></div>
           </div>
         </div>
       </div>
 
       <div class="sctotal">
-        <span class="num" id="scNum">–<small>/ 30</small></span>
-        <span class="band" id="scBand">Not scored yet<span>Answer all six to see where this one stands.</span></span>
-        <span class="weak" id="scWeak"></span>
+        <span class="scpart" style="--c:var(--mag)"><span class="k">Business value</span><span class="v" id="scBV">–<small> / 15</small></span></span>
+        <span class="scdiv"></span>
+        <span class="scpart" style="--c:var(--tea)"><span class="k">Implementation readiness</span><span class="v" id="scIR">–<small> / 15</small></span></span>
+        <span class="scdiv"></span>
+        <span class="scpart"><span class="k">Total</span><span class="num" id="scNum">–<small>/ 30</small></span></span>
+        <span class="band" id="scBand">Not scored yet<span>Answer all six to place this use case.</span></span>
         <button class="screset" type="button" id="scReset">Reset</button>
-      </div>
-    </div>
-  </div>
-</section>
-
-<!-- 11 SUBMIT -->
-<section data-nav="Submit">
-  <div class="blob" style="width:620px;height:620px;background:var(--vio);top:-18%;left:-12%"></div>
-  <div class="blob" style="width:460px;height:460px;background:var(--tea);bottom:-16%;right:-8%"></div>
-  <div class="wrap">
-    <div class="eyebrow rv">Over to you</div>
-    <h2 class="big rv">Submit your <span class="gt">business use case</span>.</h2>
-
-    <div class="sub rv">
-      <div>
-        <p class="lede" style="margin-bottom:0">Send in the use cases your table agreed on. They come through to the facilitators as you submit them, and feed the shortlist we close the session with.</p>
-        <ol class="substeps">
-          <li><b>1</b><span>Scan the code, or open the link below on your device.</span></li>
-          <li><b>2</b><span>One submission per use case — add another for each one your table agreed.</span></li>
-          <li><b>3</b><span>Use the wording from your worksheet, including the frequency and the time cost.</span></li>
-        </ol>
-        <div class="sublink">
-          <p class="lb">Business Use Case Submission Form</p>
-          <a href="https://forms.cloud.microsoft/r/kgjJMk0FQy">https://forms.cloud.microsoft/r/kgjJMk0FQy</a>
-        </div>
-      </div>
-      <div class="subqr">
-        <span class="frame"><img src="data:image/png;base64,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" alt="QR code linking to the Business Use Case Submission Form" width="540" height="540"></span>
-        <span class="cap">Scan to submit</span>
       </div>
     </div>
   </div>
@@ -1458,7 +1407,7 @@ nav.dark.solid{background:rgba(11,16,32,.6);box-shadow:0 1px 0 rgba(255,255,255,
   var mat = document.getElementById('mat');
   if (mat){
     var MAX = 20;
-    var QN = [['Low Hanging Fruit','Quick Wins'],['Parked','Test & Learn']];
+    var QN = [['Prioritise & Deploy','Plan & Invest'],['Explore if capacity allows','Deprioritise']];
     var input = document.getElementById('priInput');
     var addBtn = document.getElementById('priAdd');
     var list = document.getElementById('priList');
@@ -1597,45 +1546,42 @@ nav.dark.solid{background:rgba(11,16,32,.6);box-shadow:0 1px 0 rgba(255,255,255,
 
   var scBtns = Array.prototype.slice.call(document.querySelectorAll('.sc'));
   if (scBtns.length){
-    var NAMES = ['Business objective','Key results','Accountability','Business impact','User desirability','Technical feasibility'];
     var scores = [0,0,0,0,0,0];
+    var bvEl = document.getElementById('scBV');
+    var irEl = document.getElementById('scIR');
     var numEl = document.getElementById('scNum');
     var bandEl = document.getElementById('scBand');
-    var weakEl = document.getElementById('scWeak');
     var resetEl = document.getElementById('scReset');
+
+    // quadrant: high value / high readiness -> deploy now
+    var QUAD = {
+      hh: ['Prioritize &amp; Deploy',   'High value, ready to run \u2014 take it forward now.'],
+      hl: ['Plan &amp; Invest',         'Worth doing, not yet ready \u2014 needs data, integration or change work first.'],
+      lh: ['Pilot &amp; Validate',      'Easy to try \u2014 run it small and test whether the value is bigger than it looks.'],
+      ll: ['Future Consideration',  'Neither the value nor the readiness is there yet \u2014 revisit later.']
+    };
 
     function paint(){
       scBtns.forEach(function(b){
         var q = +b.getAttribute('data-q'), v = +b.getAttribute('data-v');
         b.setAttribute('aria-pressed', scores[q] === v ? 'true' : 'false');
       });
-      var done = scores.every(function(s){ return s > 0; });
-      var total = scores.reduce(function(a,b){ return a+b; }, 0);
+      var bv = scores[0] + scores[1] + scores[2];
+      var ir = scores[3] + scores[4] + scores[5];
+      var answered = scores.filter(function(s){ return s > 0; }).length;
+      var done = answered === 6;
+
+      bvEl.innerHTML  = (scores[0]&&scores[1]&&scores[2] ? bv : '\u2013') + '<small> / 15</small>';
+      irEl.innerHTML  = (scores[3]&&scores[4]&&scores[5] ? ir : '\u2013') + '<small> / 15</small>';
+      numEl.innerHTML = (done ? bv+ir : '\u2013') + '<small>/ 30</small>';
 
       if (!done){
-        var answered = scores.filter(function(s){ return s>0; }).length;
-        numEl.innerHTML = (answered ? total : '\u2013') + '<small>/ 30</small>';
         bandEl.innerHTML = 'Not scored yet<span>' + (6-answered) + ' of 6 still to answer.</span>';
-        weakEl.innerHTML = '';
         return;
       }
-      numEl.innerHTML = total + '<small>/ 30</small>';
-      var band, note;
-      if (total >= 24){ band = 'Ready to take forward'; note = 'Well defined on every dimension \u2014 it can be scored, owned and started.'; }
-      else if (total >= 16){ band = 'Promising \u2014 sharpen it first'; note = 'Strengthen the weakest dimension before it goes on the shortlist.'; }
-      else { band = 'Needs definition'; note = 'Too little is settled yet for an owner to be named against it.'; }
-      bandEl.innerHTML = band + '<span>' + note + '</span>';
-
-      var min = Math.min.apply(null, scores);
-      var max = Math.max.apply(null, scores);
-      if (min === max){
-        weakEl.innerHTML = 'Even across all six';
-      } else {
-        var weak = [];
-        scores.forEach(function(s,i){ if (s === min) weak.push(NAMES[i]); });
-        weakEl.innerHTML = (weak.length > 2 ? 'Weakest: <b>' + weak.slice(0,2).join('</b>, <b>') + '</b> and ' + (weak.length-2) + ' more'
-                                            : 'Weakest: <b>' + weak.join('</b>, <b>') + '</b>');
-      }
+      var key = (bv >= 10 ? 'h' : 'l') + (ir >= 10 ? 'h' : 'l');
+      var out = QUAD[key];
+      bandEl.innerHTML = out[0] + '<span>' + out[1] + '</span>';
     }
 
     scBtns.forEach(function(b){
