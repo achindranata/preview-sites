@@ -229,6 +229,96 @@ svg text{font-family:var(--font)}
 .kl .t i{position:absolute;left:0;top:0;bottom:0;width:0;background:linear-gradient(90deg,var(--rp50),#7FB2FF);transition:width 1.3s}
 .kl .p{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
 
+
+/* tabs + pages */
+.tabs{display:flex;gap:1px;background:var(--line);border:1px solid var(--line);margin:0 0 18px;position:sticky;top:0;z-index:30}
+.tab{flex:1;background:#0C1334;border:0;padding:12px 18px;text-align:left;cursor:pointer;display:flex;gap:14px;align-items:center;transition:background .2s}
+.tab:hover{background:#111B48}
+.tab .tn{font-size:24px;font-weight:800;color:var(--dim);font-variant-numeric:tabular-nums}
+.tab b{display:block;font-size:16px}
+.tab small{display:block;color:var(--muted);font-size:12px}
+.tab.on{background:linear-gradient(180deg,rgba(227,179,65,.2),rgba(227,179,65,.06)),#0C1334;box-shadow:inset 0 -3px 0 var(--emas)}
+.tab.on .tn{color:var(--emas)}
+.pg{display:none}.pg.on{display:block}
+.cta{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-top:16px;padding:16px 20px;border:1px solid var(--emas);border-radius:14px;background:linear-gradient(90deg,rgba(227,179,65,.12),rgba(227,179,65,.02))}
+.cta b{display:block;font-size:17px;margin-bottom:2px}.cta span{color:var(--muted);font-size:13.5px}
+/* reverse calculator */
+.ccy{display:grid;grid-template-columns:repeat(6,1fr);gap:1px;background:var(--line2);border:1px solid var(--line2)}
+.ccy button{background:#0C1334;border:0;padding:8px 4px;cursor:pointer;text-align:center;min-width:0}
+.ccy button:hover{background:#121C4A}
+.ccy b{display:block;font-size:14px}
+.ccy small{display:block;font-size:10px;color:var(--muted);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.ccy button.on{background:linear-gradient(180deg,rgba(227,179,65,.2),rgba(227,179,65,.05));box-shadow:inset 0 -3px 0 var(--emas)}
+.rvrates{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--line2);border:1px solid var(--line2)}
+.rvrates div{background:#0C1334;padding:9px 11px;font-size:11.5px;color:var(--muted)}
+.rvrates b{display:block;font-size:15px;color:var(--ink);font-variant-numeric:tabular-nums}
+.rvrates div.mid{background:rgba(227,179,65,.08)}
+.nrow{display:grid;grid-template-columns:86px 1fr 64px;align-items:center;gap:8px;font-size:12px;margin:3px 0}
+.nn{line-height:0;white-space:nowrap;overflow:hidden}
+.nn i{display:inline-block;width:20px;height:11px;margin:1px 2px 1px 0;border-radius:2px;box-shadow:inset 0 0 0 1px rgba(255,255,255,.35)}
+.nn em{font-style:normal;color:var(--muted);margin-left:4px;font-size:11px;line-height:1}
+.nc{text-align:right;font-weight:700;font-variant-numeric:tabular-nums}
+/* simulator */
+.simbar{display:flex;gap:16px;align-items:stretch;flex-wrap:wrap;margin-bottom:14px}
+.modes{display:flex;gap:1px;background:var(--line);border:1px solid var(--line)}
+.modes button{background:#0C1334;border:0;padding:10px 16px;text-align:left;cursor:pointer;min-width:210px}
+.modes button b{display:block;font-size:14px}.modes button small{color:var(--muted);font-size:11.5px}
+.modes button.on{background:rgba(227,179,65,.16);box-shadow:inset 0 -3px 0 var(--emas)}
+.presets{display:flex;gap:8px;flex-wrap:wrap;align-items:center;flex:1}
+.presets button{background:rgba(255,255,255,.04);border:1px solid var(--line2);border-radius:999px;padding:8px 14px;font-size:12.5px;cursor:pointer}
+.presets button:hover{border-color:var(--emas);color:var(--emas2)}
+.kband.k5{grid-template-columns:repeat(5,1fr)}
+.dg{position:relative;height:8px;margin-top:8px;background:linear-gradient(90deg,#27B46E 0 76.6%,#E3B341 76.6% 85.7%,#E5484D 85.7%)}
+.dg i{position:absolute;top:-5px;width:4px;height:18px;margin-left:-2px;background:#fff;box-shadow:0 0 8px #fff}
+.treewrap{position:relative}
+.tree{position:relative;height:460px;background:#0A1030}
+.tile{position:absolute;box-sizing:border-box;border:2px solid #0A1030;overflow:hidden;cursor:pointer;padding:8px 10px;color:#0A1030;transition:left .6s cubic-bezier(.3,.8,.2,1),top .6s cubic-bezier(.3,.8,.2,1),width .6s cubic-bezier(.3,.8,.2,1),height .6s cubic-bezier(.3,.8,.2,1),background-color .6s}
+.tile:hover{filter:brightness(1.1)}
+.tile b{display:block;font-size:15px;line-height:1.15;font-weight:800}
+.tile span{display:block;font-size:12px;font-weight:600;opacity:.85}
+.tile em{position:absolute;right:6px;bottom:6px;font-style:normal;font-size:11px;font-weight:800;background:#0A1030;color:#F7DA84;padding:2px 7px;border-radius:999px}
+.tile.sel{box-shadow:inset 0 0 0 3px #fff,inset 0 0 0 5px #0A1030}
+.tile.sm b{font-size:12px}.tile.sm span{font-size:10.5px}
+.tile.xs{padding:4px 5px}.tile.xs b{font-size:10px}.tile.xs span,.tile.xs em{display:none}
+.tile.xxs b{display:none}
+.ed select{width:100%;background:#0A1030;color:var(--ink);border:1px solid var(--line2);border-radius:10px;padding:10px 12px;font:inherit;font-size:14px}
+.edfull{font-size:20px;font-weight:800;margin:12px 0 2px}
+.edbase{font-size:12.5px;color:var(--muted)}
+.edrow{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin:14px 0 2px}
+.edrow label{font-size:11.5px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:700}
+.edval{font-size:28px;font-weight:800;font-variant-numeric:tabular-nums}
+.edreal{font-size:12.5px;color:var(--muted)}
+.delta{font-size:12.5px;font-weight:700;padding:3px 10px;border-radius:999px;background:rgba(255,255,255,.06);color:var(--muted)}
+.delta.dp{background:rgba(39,180,110,.16);color:#6FE0A6}.delta.dm{background:rgba(229,72,77,.16);color:#FF8D8F}
+input[type=range].rg{width:100%;accent-color:var(--emas);height:30px;margin:2px 0;cursor:pointer}
+.pm{display:flex;gap:6px}
+.pm button{flex:1;background:rgba(255,255,255,.04);border:1px solid var(--line2);border-radius:10px;padding:8px 0;font-weight:700;cursor:pointer}
+.pm button:hover{border-color:var(--emas)}
+.edsep{height:1px;background:var(--line2);margin:16px 0 4px}
+.absorb{height:12px;background:rgba(255,255,255,.07);display:flex;overflow:hidden;margin-top:4px}
+.absorb i{display:block;height:100%;transition:width .5s}
+.ednote{font-size:12px;color:var(--muted);margin:12px 0 0;line-height:1.5}
+.cmpleg{display:flex;gap:12px;align-items:center;font-size:11.5px;color:var(--muted);font-weight:400}
+.cmpleg i{display:inline-block;width:18px;height:10px;margin-right:-6px}
+.cmpleg .l0{border:1.5px dashed rgba(247,218,132,.8)}.cmpleg .l1{background:#3E8CF5}.cmpleg .l2{background:#E3B341}
+.cmp{display:grid;grid-template-columns:230px 1fr 230px;gap:14px;align-items:center;padding:7px 8px;border-bottom:1px solid var(--line2);cursor:pointer;font-size:13px}
+.cmp:hover,.cmp.sel{background:rgba(227,179,65,.07)}
+.cmp.sel{box-shadow:inset 3px 0 0 var(--emas)}
+.cmp .n{min-width:0}.cmp .n b{display:block}
+.cmp .n small{color:var(--muted);font-size:11px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;display:block}
+.cmp .t{position:relative;height:20px}
+.cmp .t i{position:absolute;left:0;transition:width .6s cubic-bezier(.3,.8,.2,1)}
+.cmp .t .b0{top:0;bottom:0;border:1.5px dashed rgba(247,218,132,.7);z-index:2}
+.cmp .t .b1{top:3px;bottom:3px;background:linear-gradient(90deg,#2F6FD0,#5FA0FF)}
+.cmp .t .br{top:3px;bottom:3px;background:#E3B341;opacity:.95}
+.cmp .v{text-align:right;font-variant-numeric:tabular-nums;font-weight:700}
+.cmp .v small{display:block;color:var(--muted);font-weight:400;font-size:11.5px}
+.cmp .v .dp{color:#6FE0A6;margin-left:6px}.cmp .v .dm{color:#FF8D8F;margin-left:6px}
+.story{margin-top:16px;padding:14px 18px;border:1px solid var(--line);border-radius:14px;background:rgba(227,179,65,.05);font-size:14.5px;line-height:1.6;display:flex;gap:12px;align-items:flex-start}
+.story b{color:var(--emas2)}
+.toast{position:fixed;left:50%;bottom:28px;transform:translate(-50%,20px);background:#060A20;border:1px solid var(--emas);color:var(--ink);padding:10px 16px;border-radius:12px;font-size:13.5px;opacity:0;transition:.3s;z-index:80;pointer-events:none;max-width:90vw}
+.toast.on{opacity:1;transform:translate(-50%,0)}
+
 /* time machine */
 .tm{display:grid;grid-template-columns:260px 1fr;gap:28px;align-items:center}
 .tmy{font-size:96px;font-weight:900;line-height:.9;letter-spacing:-.04em;background:linear-gradient(180deg,var(--emas2),var(--emas) 60%,#A9781B);-webkit-background-clip:text;background-clip:text;color:transparent;font-variant-numeric:tabular-nums}
@@ -264,6 +354,7 @@ svg text{font-family:var(--font)}
 .reveal{opacity:0;transform:translateY(16px);transition:opacity .8s ease,transform .8s ease}
 .reveal.in{opacity:1;transform:none}
 @media (max-width:1100px){
+  .kband.k5{grid-template-columns:repeat(2,1fr)}.cmp{grid-template-columns:140px 1fr 150px}.ccy{grid-template-columns:repeat(4,1fr)}
   #landing .wrap{grid-template-columns:1fr;padding-top:40px;overflow:auto}
   .rosette{display:none}
   .kband{grid-template-columns:repeat(4,1fr)}
@@ -355,6 +446,13 @@ svg text{font-family:var(--font)}
       <span class="tag bi"><img class="ti" data-logo="bi" alt="">bi.go.id · live</span><span>Bank Indonesia website, retrieved 22 Oct 2026</span>
     </div>
 
+    <div id="tabsAnchor"></div>
+    <nav class="tabs" id="tabs">
+      <button class="tab on" data-pg="ov"><span class="tn">01</span><span><b>Rupiah Pulse overview</b><small>APBN · Nusantara · Rupiah · Time machine</small></span></button>
+      <button class="tab" data-pg="kl"><span class="tn">02</span><span><b>Belanja K/L Simulator</b><small>What-if on pagu &amp; realisation · Per_KL sheet</small></span></button>
+    </nav>
+
+    <div id="pgOverview" class="pg on">
     <div class="kband" id="kband"></div>
 
     <div class="sec reveal"><h2>Denyut <span>APBN</span></h2><p>Budget pulse: cumulative realisation through September 2026</p></div>
@@ -409,11 +507,11 @@ svg text{font-family:var(--font)}
     </div>
 
     <svg class="parang" width="100%" aria-hidden="true"><rect width="100%" height="14" fill="url(#parang)"/></svg>
-    <div class="sec reveal"><h2>Rupiah <span>di dunia</span> · Belanja negara</h2><p>What your rupiah buys abroad · where spending goes</p></div>
+    <div class="sec reveal"><h2>Rupiah <span>di dunia</span></h2><p>Both directions, at Bank Indonesia's transaction rates for 21 Oktober 2026</p></div>
     <div class="grid reveal">
       <div class="pn c6">
-        <h3><span>Rupiah converter</span><span class="tag bi">bi.go.id · Kurs Transaksi BI</span></h3>
-        <div class="cap">Kurs Transaksi BI mid-rate, 21 Oktober 2026. Type an amount or tap a banknote.</div>
+        <h3><span>Rupiah → foreign currency</span><span class="tag bi"><img class="ti" data-logo="bi" alt="">bi.go.id · Kurs Transaksi BI</span></h3>
+        <div class="cap">Mid-rate (average of BI buy and sell). Type an amount or tap a banknote.</div>
         <div class="conv">
           <div class="amt"><span>Rp</span><input id="amt" inputmode="numeric" value="100.000" aria-label="Amount in rupiah"></div>
           <div class="quick" id="quick"></div>
@@ -422,11 +520,19 @@ svg text{font-family:var(--font)}
         </div>
       </div>
       <div class="pn c6">
-        <h3><span>Belanja K/L: top ministries &amp; agencies</span><span class="tag xl">Excel · Per_KL</span></h3>
-        <div class="cap">Realisation as % of allocation (pagu), to 30 Sep 2026 · sorted by allocation</div>
-        <div id="kl"></div>
+        <h3><span>Foreign currency → Rupiah</span><span class="tag bi"><img class="ti" data-logo="bi" alt="">bi.go.id · Kurs Transaksi BI</span></h3>
+        <div class="cap">Pick a currency and an amount to see what it is worth in rupiah, and in rupiah banknotes.</div>
+        <div class="conv">
+          <div class="ccy" id="rvCcy"></div>
+          <div class="amt"><span id="rvSym">$</span><input id="rvAmt" inputmode="decimal" value="100" aria-label="Amount in foreign currency"></div>
+          <div class="quick" id="rvQuick"></div>
+          <div class="big" id="rvBig"></div>
+          <div class="rvrates" id="rvRates"></div>
+          <div id="rvStack"></div>
+        </div>
       </div>
     </div>
+    <div class="cta reveal"><div><b>Belanja K/L Simulator</b><span>Move pagu between ministries and agencies, test faster realisation, and watch the deficit respond. Built from the Per_KL sheet.</span></div><button class="hb gold" id="ctaKL">Open simulator →</button></div>
 
     <svg class="parang" width="100%" aria-hidden="true"><rect width="100%" height="14" fill="url(#parang)"/></svg>
     <div class="sec reveal"><h2>Mesin Waktu <span>Rupiah</span></h2><p>80 years of rupiah, 1946 → 2026 · from the Sejarah_Rupiah sheet</p></div>
@@ -445,6 +551,52 @@ svg text{font-family:var(--font)}
     <div class="sec reveal"><h2>Catatan <span>Copilot</span></h2><p>What Copilot found when it combined both sources</p></div>
     <div class="ins reveal" id="ins"></div>
     <div class="ticker" aria-label="Key messages"><div id="tick"></div></div>
+    </div><!-- /pgOverview -->
+
+    <div id="pgKL" class="pg">
+      <div class="sec"><h2>Belanja <span>K/L</span> Simulator</h2><p>What-if on APBN 2026 ministry &amp; agency spending · realisation to 30 Sep 2026 · Per_KL sheet</p></div>
+      <div class="simbar">
+        <div class="modes" id="simMode">
+          <button class="on" data-m="realloc"><b>Reallocate</b><small>Total stays at the Rp1.510,5 T ceiling</small></button>
+          <button data-m="add"><b>Add spending</b><small>Allowed up to the 3% PDB deficit cap</small></button>
+        </div>
+        <div class="presets" id="presets"></div>
+      </div>
+      <div class="kband k5" id="simK"></div>
+      <div class="grid">
+        <div class="pn c7">
+          <h3><span>Pagu map, simulated</span><span class="tag xl"><img class="ti" data-logo="excel" alt="">Excel · Per_KL</span></h3>
+          <div class="cap">Box size = pagu · colour = realisation %. Tap a box to edit it.</div>
+          <div class="treewrap"><div id="tree" class="tree"></div><div class="tip" id="ttree"></div></div>
+          <div class="grad"><span>55%</span><i></i><span>95%+ realised</span></div>
+        </div>
+        <div class="pn c5 ed">
+          <h3><span>Edit a ministry or agency</span><span class="tag xl">Excel</span></h3>
+          <select id="edSel" aria-label="Choose ministry or agency" style="margin-top:10px"></select>
+          <div class="edfull" id="edFull"></div><div class="edbase" id="edBase"></div>
+          <div class="edrow"><label>Pagu 2026</label><span class="delta" id="edDelta"></span></div>
+          <div class="edval" id="edPagu"></div>
+          <input type="range" class="rg" id="rgPagu" aria-label="Pagu">
+          <div class="pm" id="pm"><button data-d="-5000">−5 T</button><button data-d="-1000">−1 T</button><button data-d="1000">+1 T</button><button data-d="5000">+5 T</button></div>
+          <div id="srcWrap"><div class="edrow"><label>Funded from</label></div><select id="edSrc" aria-label="Funding source"></select></div>
+          <div class="edsep"></div>
+          <div class="edrow"><label>Realisation</label><span class="edreal" id="edRealRp"></span></div>
+          <div class="edval" id="edReal"></div>
+          <input type="range" class="rg" id="rgReal" aria-label="Realisation percent">
+          <div class="absorb" id="absorb"></div>
+          <div class="edsep"></div>
+          <div class="edrow"><label>Year-end realisation, all K/L</label><span class="edreal" id="allVal"></span></div>
+          <input type="range" class="rg" id="rgAll" min="67" max="100" step="1" value="67" aria-label="Year-end realisation for all K/L">
+          <p class="ednote">Pagu can't drop below what a K/L has already spent, and realisation can only rise from its September position.</p>
+        </div>
+        <div class="pn c12">
+          <h3><span>APBN 2026 vs your simulation</span><span class="cmpleg"><i class="l0"></i> APBN pagu <i class="l1"></i> Simulated pagu <i class="l2"></i> Realised</span></h3>
+          <div class="cap">Tap a row to edit it</div>
+          <div id="cmp"></div>
+        </div>
+      </div>
+      <div class="story"><img class="cpl" data-logo="copilot" alt="Copilot" style="width:26px;height:26px;flex:0 0 26px"><div id="story"></div></div>
+    </div><!-- /pgKL -->
 
     <div class="srcfoot">
       <div><h5>Sources Copilot used</h5><ul>
@@ -457,11 +609,13 @@ svg text{font-family:var(--font)}
       <div><h5>How to read this</h5><ul>
         <li>APBN realisation is cumulative from January. Targets are the APBN 2026 posture (Pendapatan Rp3.153,6 T · Belanja Rp3.842,7 T · Defisit Rp689,1 T / 2,68% PDB · TKD Rp693,0 T).</li>
         <li>Deficit as % of GDP uses the GDP implied by the APBN 2026 deficit design.</li>
-        <li>Converter uses the average of BI's selling and buying transaction rates.</li>
+        <li>Converters use BI's transaction rates: the mid-rate is the average of BI's buy and sell rates.</li>
+        <li>Belanja K/L simulator: the ceiling is Belanja K/L in APBN 2026 (Rp1.510,5 T). Extra spending raises Belanja Negara and the deficit one-for-one, capped at 3% of GDP (UU 17/2003).</li>
       </ul></div>
     </div>
     <div class="disc"><b>Demo notice:</b> APBN, regional transfer and ministry figures are <b>simulated</b> (APBN_2026_Dummy.xlsx) and are not official Ministry of Finance data. Exchange rate, BI-Rate, inflation and reserves figures are public Bank Indonesia data as retrieved on 22 October 2026.</div>
   </div>
+  <div class="toast" id="toast" role="status"></div>
 </main>
 
 <script>
@@ -518,7 +672,7 @@ const STEPS=[
  ['<img data-logo="bi" alt="Bank Indonesia">','#E5484D','Opening bi.go.id › Kurs Transaksi BI','Browser · 26 currencies, 21 Oct 2026','26 rates'],
  ['<img data-logo="bi" alt="Bank Indonesia">','#E5484D','Opening bi.go.id › BI-Rate & Inflasi','Browser · policy rate decisions and inflation','2 tables'],
  ['W','#3E8CF5','Searching the web','Bank Indonesia reserves press release','US$146,3 M'],
- ['<img data-logo="copilot" alt="Copilot">','#E3B341','Building your dashboard','Charts, map, converter, time machine and insights','Ready']
+ ['<img data-logo="copilot" alt="Copilot">','#E3B341','Building your dashboard','Charts, map, converters, K/L simulator, time machine','Ready']
 ];
 $('#steps').innerHTML=STEPS.map((s,i)=>`<div class="st" data-i="${i}"><div class="ic" style="background:${s[1]}22;color:${s[1]}">${s[0]}</div><div><b>${s[2]}</b><small>${s[3]}</small></div><div class="ok">waiting</div></div>`).join('');
 applyLogos($('#steps'));
@@ -534,7 +688,7 @@ function runWorking(){
   });
   wkTimer.push(setTimeout(openDash,STEPS.length*dt+450));
 }
-function openDash(){wkTimer.forEach(clearTimeout);clearInterval(typer);show('dash');animateDash();}
+function openDash(){wkTimer.forEach(clearTimeout);clearInterval(typer);show('dash');setPg('ov',false);animateDash();}
 $('#go').addEventListener('click',()=>{if(typed<PROMPT.length){clearInterval(typer);typed=PROMPT.length;$('#ptyped').textContent=PROMPT;$('#pid').classList.add('on');}runWorking();});
 $('#skip').addEventListener('click',openDash);
 document.addEventListener('keydown',e=>{if(e.key==='Enter'&&$('#landing').classList.contains('on')){e.preventDefault();$('#go').click();}});
@@ -730,9 +884,173 @@ function conv(){const a=amount();
 $('#amt').addEventListener('input',()=>{const a=amount();$('#amt').value=a?fmt(a):'';conv();});
 conv();
 
-/* ---------- K/L ---------- */
-const KL=DATA.kl.filter(k=>!k.Kementerian_Lembaga.startsWith('K/L lainnya')).sort((a,b)=>b.Pagu-a.Pagu).slice(0,10);
-$('#kl').innerHTML=KL.map(k=>`<div class="kl"><span class="n" title="${k.Kementerian_Lembaga}">${k.Kementerian_Lembaga} <small>· Rp${fmt(k.Pagu/1000,1)} T</small></span><span class="t"><i data-w="${k.Persen}"></i></span><span class="p">${fmt(k.Persen,1)}%</span></div>`).join('');
+/* ---------- Reverse converter: foreign currency -> IDR ---------- */
+const KMAP={};DATA.kurs.forEach(k=>KMAP[k.c]=k);
+let rvSel='USD';
+const RVQ={JPY:100,KRW:1000};
+const DENOM=[[100000,'#E5484D'],[50000,'#3E8CF5'],[20000,'#27B46E'],[10000,'#9D6BDA'],[5000,'#D08A2E'],[2000,'#8C9AB8'],[1000,'#5FBF9A']];
+$('#rvCcy').innerHTML=FXL.map(c=>`<button data-c="${c}"><b>${c}</b><small>${FXN[c]}</small></button>`).join('');
+$$('#rvCcy button').forEach(b=>b.addEventListener('click',()=>{rvSel=b.dataset.c;const m=RVQ[rvSel]||1;$('#rvAmt').value=fmt(100*m);rvQuick();rconv();}));
+function rvQuick(){const m=RVQ[rvSel]||1;$('#rvQuick').innerHTML=[1,10,100,1000,10000].map(q=>`<button data-v="${q*m}">${FXS[rvSel].trim()} ${fmt(q*m)}</button>`).join('');
+  $$('#rvQuick button').forEach(b=>b.addEventListener('click',()=>{$('#rvAmt').value=fmt(+b.dataset.v);rconv();}));}
+function rvAmount(){let t=($('#rvAmt').value||'').trim().replace(/\./g,'').replace(',','.');const v=parseFloat(t.replace(/[^0-9.]/g,''));return isNaN(v)?0:v;}
+function rconv(){
+  $$('#rvCcy button').forEach(b=>b.classList.toggle('on',b.dataset.c===rvSel));
+  $('#rvSym').textContent=FXS[rvSel].trim();
+  const a=rvAmount(),k=KMAP[rvSel],u=k.unit,mid=RATE[rvSel],idr=a*mid,dec=(a%1)?2:0;
+  $('#rvBig').innerHTML=`${FXS[rvSel].trim()} ${fmt(a,dec)} =<b>Rp${fmt(Math.round(idr))}</b>${FXN[rvSel]} → rupiah · 1 ${rvSel} = Rp${fmt(mid,2)}`;
+  $('#rvRates').innerHTML=`<div>BI buys ${rvSel} at<b>Rp${fmt(k.beli/u,2)}</b>= Rp${fmt(Math.round(a*k.beli/u))}</div><div class="mid">Mid-rate<b>Rp${fmt(mid,2)}</b>= Rp${fmt(Math.round(idr))}</div><div>BI sells ${rvSel} at<b>Rp${fmt(k.jual/u,2)}</b>= Rp${fmt(Math.round(a*k.jual/u))}</div>`;
+  let rem=Math.round(idr);const parts=[];
+  DENOM.forEach(d=>{const n=Math.floor(rem/d[0]);if(n>0){parts.push([d,n]);rem-=n*d[0];}});
+  const total=parts.reduce((t,p)=>t+p[1],0);
+  $('#rvStack').innerHTML=total?`<div class="cap" style="margin:4px 0 6px">In rupiah banknotes: <b style="color:var(--ink)">${fmt(total)} lembar</b>${rem>0?` + Rp${fmt(rem)} in coins`:''}</div>`+
+    parts.map(p=>`<div class="nrow"><span>Rp${fmt(p[0][0])}</span><span class="nn">${('<i style="background:'+p[0][1]+'"></i>').repeat(Math.min(p[1],20))}${p[1]>20?`<em>+${fmt(p[1]-20)}</em>`:''}</span><span class="nc">× ${fmt(p[1])}</span></div>`).join('')
+    :'<div class="cap" style="margin-top:6px">Enter an amount</div>';
+}
+$('#rvAmt').addEventListener('input',()=>{const v=$('#rvAmt').value;if(v.indexOf(',')<0){const n=parseInt(v.replace(/[^0-9]/g,''),10);$('#rvAmt').value=isNaN(n)?'':fmt(n);}rconv();});
+rvQuick();rconv();
+applyLogos();
+
+/* ---------- Belanja K/L simulator (Per_KL sheet) ---------- */
+const KLS={'Badan Gizi Nasional':'BGN','Kementerian Pertahanan':'Kemhan','Kepolisian Negara RI':'Polri','Kementerian Pekerjaan Umum':'Kementerian PU','Kementerian Kesehatan':'Kemenkes','Kementerian Agama':'Kemenag','Kementerian Sosial':'Kemensos','Kementerian Pendidikan Tinggi, Sains, dan Teknologi':'Kemdiktisaintek','Kementerian Pendidikan Dasar dan Menengah':'Kemendikdasmen','Kementerian Keuangan':'Kemenkeu','Kementerian Pertanian':'Kementan','Kementerian Perhubungan':'Kemenhub','Kejaksaan RI':'Kejaksaan','Kementerian Hukum':'Kemenkum','Mahkamah Agung':'MA','K/L lainnya (gabungan)':'K/L lainnya'};
+const isLain=n=>n.indexOf('K/L lainnya')===0;
+const KB=DATA.kl.map(k=>({n:k.Kementerian_Lembaga,s:KLS[k.Kementerian_Lembaga]||k.Kementerian_Lembaga,p0:k.Pagu,r0:k.Realisasi}))
+  .sort((a,b)=>(isLain(a.n)-isLain(b.n))||(b.p0-a.p0));
+const sum=a=>a.reduce((t,v)=>t+v,0);
+const CEIL=sum(KB.map(k=>k.p0)), R0=sum(KB.map(k=>k.r0));
+const PDBm=T.pemb/0.0268*1000, DEF0=T.pemb*1000, BEL0=T.bel*1000, CAPD=0.03*PDBm, HEAD=CAPD-DEF0;
+const LAIN=KB.findIndex(k=>isLain(k.n));
+const S={mode:'realloc',sel:0,src:'prop',p:KB.map(k=>k.p0),r:KB.map(k=>k.r0),all:null};
+const fT=v=>'Rp'+fmt(v/1000,1)+' T';
+const fTs=v=>(v>=0?'+':'−')+'Rp'+fmt(Math.abs(v)/1000,1)+' T';
+function extra(){return sum(S.p)-CEIL;}
+function donors(i){return S.src==='prop'?KB.map((k,j)=>j).filter(j=>j!==i):[+S.src];}
+function feasibleMax(i){if(S.mode==='add')return S.p[i]+Math.max(0,HEAD-extra());return S.p[i]+sum(donors(i).map(j=>Math.max(0,S.p[j]-S.r[j])));}
+function toast(m){const t=$('#toast');t.textContent=m;t.classList.add('on');clearTimeout(toast.h);toast.h=setTimeout(()=>t.classList.remove('on'),2800);}
+function setPagu(i,target){
+  target=Math.max(target,S.r[i]);
+  let d=target-S.p[i];if(Math.abs(d)<1)return;
+  if(S.mode==='add'){const room=HEAD-extra();if(d>room+1){d=Math.max(0,room);toast('Limit reached: the deficit would pass 3% of GDP, the legal cap in UU 17/2003.');}S.p[i]+=d;return;}
+  const ds=donors(i);
+  if(d>0){const cv=ds.map(j=>Math.max(0,S.p[j]-S.r[j])),cap=sum(cv);
+    if(d>cap+1){d=cap;toast('Limit reached: the funding K/L cannot be cut below what it has already spent.');}
+    if(cap>0)ds.forEach((j,k)=>{S.p[j]-=d*cv[k]/cap;});}
+  else{const tot=sum(ds.map(j=>S.p[j]));ds.forEach(j=>{S.p[j]+=(-d)*S.p[j]/tot;});}
+  S.p[i]+=d;
+}
+function setReal(i,pct){S.r[i]=Math.min(S.p[i],Math.max(KB[i].r0,pct/100*S.p[i]));}
+function setAllReal(pct){S.all=pct;KB.forEach((k,i)=>setReal(i,pct));}
+function resetSim(mode){if(mode)S.mode=mode;S.src='prop';S.all=null;S.p=KB.map(k=>k.p0);S.r=KB.map(k=>k.r0);$('#rgAll').value=$('#rgAll').min;}
+function rcol(pct){let t=Math.max(0,Math.min(1,(pct-55)/40));let a,b;if(t<.5){a=C1;b=C2;t*=2;}else{a=C2;b=C3;t=(t-.5)*2;}return `rgb(${a.map((c,i)=>Math.round(lerp(c,b[i],t))).join(',')})`;}
+$('#rgAll').min=Math.floor(R0/CEIL*100);$('#rgAll').value=$('#rgAll').min;
+
+function squarify(items,W,H){
+  const out=[],rect={x:0,y:0,w:W,h:H};const tot=sum(items.map(a=>a.v));
+  let rest=items.map(a=>({i:a.i,a:a.v*W*H/tot})),row=[];
+  const worst=(rw,len)=>{const t=sum(rw.map(r=>r.a)),mx=Math.max(...rw.map(r=>r.a)),mn=Math.min(...rw.map(r=>r.a));return Math.max(len*len*mx/(t*t),(t*t)/(len*len*mn));};
+  const lay=rw=>{const t=sum(rw.map(r=>r.a));
+    if(rect.w>=rect.h){const cw=t/rect.h;let cy=rect.y;rw.forEach(r=>{const hh=r.a/cw;out.push({i:r.i,x:rect.x,y:cy,w:cw,h:hh});cy+=hh;});rect.x+=cw;rect.w-=cw;}
+    else{const rh=t/rect.w;let cx=rect.x;rw.forEach(r=>{const ww=r.a/rh;out.push({i:r.i,x:cx,y:rect.y,w:ww,h:rh});cx+=ww;});rect.y+=rh;rect.h-=rh;}};
+  while(rest.length){const len=Math.min(rect.w,rect.h),it=rest[0];
+    if(!row.length||worst(row.concat([it]),len)<=worst(row,len)){row.push(it);rest.shift();}else{lay(row);row=[];}}
+  if(row.length)lay(row);return out;}
+
+function renderTree(){
+  const box=$('#tree'),W=box.clientWidth||900,H=box.clientHeight||460;
+  if(!box.children.length){KB.forEach((k,i)=>{const d=document.createElement('div');d.className='tile';
+    d.addEventListener('click',()=>{S.sel=i;renderSim();});
+    d.addEventListener('mousemove',ev=>{const bb=$('.treewrap').getBoundingClientRect(),tp=$('#ttree');const pct=S.r[i]/S.p[i]*100,dd=S.p[i]-k.p0;
+      tp.innerHTML=`<b>${k.n}</b><br>Pagu ${fT(S.p[i])}${Math.abs(dd)>=50?` (${fTs(dd)} vs APBN)`:''}<br>Realised ${fT(S.r[i])} · <b>${fmt(pct,1)}%</b>`;
+      tp.style.opacity=1;tp.style.left=Math.min(ev.clientX-bb.left+14,bb.width-280)+'px';tp.style.top=(ev.clientY-bb.top+14)+'px';});
+    d.addEventListener('mouseleave',()=>{$('#ttree').style.opacity=0;});box.appendChild(d);});}
+  const rects=squarify(KB.map((k,i)=>({i,v:S.p[i]})).sort((a,b)=>b.v-a.v),W,H);
+  rects.forEach(r=>{const d=box.children[r.i],k=KB[r.i],pct=S.r[r.i]/S.p[r.i]*100,dd=S.p[r.i]-k.p0;
+    d.style.left=(r.x/W*100)+'%';d.style.top=(r.y/H*100)+'%';d.style.width=(r.w/W*100)+'%';d.style.height=(r.h/H*100)+'%';d.style.backgroundColor=rcol(pct);
+    d.className='tile'+(r.i===S.sel?' sel':'')+(r.w<44||r.h<24?' xxs':r.w<92||r.h<54?' xs':r.w<150||r.h<86?' sm':'');
+    d.innerHTML=`<b>${k.s}</b><span>${fT(S.p[r.i])}</span><span>${fmt(pct,1)}% realised</span>${Math.abs(dd)>=50?`<em>${fTs(dd)}</em>`:''}`;});
+}
+function renderCmp(){
+  const box=$('#cmp');
+  if(!box.children.length){box.innerHTML=KB.map((k,i)=>`<div class="cmp" data-i="${i}"><div class="n"><b>${k.s}</b><small>${k.n}</small></div><div class="t"><i class="b1"></i><i class="br"></i><i class="b0"></i></div><div class="v"></div></div>`).join('');
+    $$('#cmp .cmp').forEach(r=>r.addEventListener('click',()=>{S.sel=+r.dataset.i;renderSim();$('.ed').scrollIntoView({behavior:reduce?'auto':'smooth',block:'nearest'});}));}
+  const mx=Math.max(...KB.map((k,i)=>Math.max(k.p0,S.p[i])));
+  $$('#cmp .cmp').forEach((row,i)=>{const k=KB[i],dd=S.p[i]-k.p0,pct=S.r[i]/S.p[i]*100;row.classList.toggle('sel',i===S.sel);
+    row.querySelector('.b0').style.width=(k.p0/mx*100)+'%';row.querySelector('.b1').style.width=(S.p[i]/mx*100)+'%';row.querySelector('.br').style.width=(S.r[i]/mx*100)+'%';
+    row.querySelector('.v').innerHTML=`${fT(S.p[i])}${Math.abs(dd)>=50?`<span class="${dd>0?'dp':'dm'}">${fTs(dd)}</span>`:''}<small>${fT(S.r[i])} realised · ${fmt(pct,1)}%</small>`;});
+}
+function renderSimK(){
+  const P=sum(S.p),R=sum(S.r),X=P-CEIL,BEL=BEL0+X,DEF=DEF0+X,DP=DEF/PDBm*100;
+  const tl=[
+    ['Total pagu K/L','--rp50',fT(P),S.mode==='realloc'?'Locked at the APBN 2026 ceiling':(Math.abs(X)>=50?`<span class="${X>0?'dn':'up'}">${fTs(X)}</span> vs APBN · room left ${fT(Math.max(0,HEAD-X))}`:`Room before the 3% cap: ${fT(HEAD)}`)],
+    ['Realisasi K/L','--emas',fT(R),`<b>${fmt(R/P*100,1)}%</b> of pagu`+(R-R0>=50?` · <span class="up">${fTs(R-R0)}</span> projected`:' · to 30 Sep')],
+    ['Belum terserap','--rp100',fT(P-R),`${fmt((P-R)/P*100,1)}% of pagu still to spend`],
+    ['Belanja Negara','--rp10',fT(BEL),Math.abs(X)>=50?`${fTs(X)} vs APBN Rp3.842,7 T`:'APBN 2026 design'],
+    ['Defisit APBN','--rp20',fmt(DP,2)+'%<small>PDB</small>',`${fT(DEF)} · legal cap 3,00%<div class="dg" title="0–3,5% of GDP; green = within the 2,68% design, red = above the 3% cap"><i style="left:${Math.min(DP/3.5*100,100)}%"></i></div>`]];
+  $('#simK').innerHTML=tl.map(t=>`<div class="kp" style="--c:var(${t[1]})"><div class="k"><span>${t[0]}</span></div><div class="v">${t[2]}</div><div class="d">${t[3]}</div></div>`).join('');
+}
+function renderEd(){
+  const i=S.sel,k=KB[i];
+  $('#edSel').value=String(i);$('#edFull').textContent=k.n;
+  $('#edBase').textContent=`APBN 2026 pagu ${fT(k.p0)} · spent to 30 Sep ${fT(k.r0)} (${fmt(k.r0/k.p0*100,1)}%)`;
+  const mn=Math.ceil(S.r[i]/100)*100,mx=Math.min(feasibleMax(i),k.p0+Math.max(k.p0,50000));
+  const rg=$('#rgPagu');rg.min=mn;rg.max=Math.max(mx,mn+100);rg.step=100;rg.value=S.p[i];
+  $('#edPagu').textContent=fT(S.p[i]);
+  const d=S.p[i]-k.p0,de=$('#edDelta');
+  de.textContent=Math.abs(d)>=50?`${fTs(d)} (${d>0?'+':'−'}${fmt(Math.abs(d)/k.p0*100,1)}%)`:'= APBN 2026';de.className='delta'+(d>=50?' dp':d<=-50?' dm':'');
+  $('#srcWrap').style.display=S.mode==='realloc'?'':'none';
+  if(S.src!=='prop'&&+S.src===i)S.src='prop';
+  $('#edSrc').innerHTML='<option value="prop">All other K/L, in proportion to their unspent pagu</option>'+KB.map((kk,j)=>j===i?'':`<option value="${j}">${kk.s} (${fT(S.p[j]-S.r[j])} unspent)</option>`).join('');
+  $('#edSrc').value=S.src;
+  const pct=S.r[i]/S.p[i]*100,rr=$('#rgReal');rr.min=(k.r0/S.p[i]*100).toFixed(1);rr.max=100;rr.step=0.1;rr.value=pct;
+  $('#edReal').textContent=fmt(pct,1)+'%';$('#edRealRp').textContent=`${fT(S.r[i])} of ${fT(S.p[i])}`;
+  $('#absorb').innerHTML=`<i style="width:${k.r0/S.p[i]*100}%;background:#E3B341" title="Spent to 30 Sep"></i><i style="width:${(S.r[i]-k.r0)/S.p[i]*100}%;background:#F7DA84;opacity:.65" title="Simulated additional realisation"></i>`;
+  $('#allVal').textContent=S.all?`Target ${S.all}% · overall ${fmt(sum(S.r)/sum(S.p)*100,1)}%`:`Now ${fmt(sum(S.r)/sum(S.p)*100,1)}%`;
+}
+function renderStory(){
+  const ch=KB.map((k,i)=>({k,d:S.p[i]-k.p0})).filter(c=>Math.abs(c.d)>=50).sort((a,b)=>Math.abs(b.d)-Math.abs(a.d));
+  const P=sum(S.p),R=sum(S.r),X=P-CEIL,DP=(DEF0+X)/PDBm*100;
+  const up=ch.filter(c=>c.d>0),dn=ch.filter(c=>c.d<0);
+  const lst=a=>a.slice(0,3).map(c=>`${c.k.s} <b>${fTs(c.d)}</b>`).join(', ')+(a.length>3?` and ${a.length-3} more`:'');
+  let t='';
+  if(!ch.length&&R-R0<50){$('#story').innerHTML='This is APBN 2026 as enacted. Tap a box in the map, pick a ministry in the editor, or try a scenario above to start a what-if.';return;}
+  if(S.mode==='realloc'&&ch.length){t+=`<b>Reallocation:</b> ${up.length?lst(up):'no increases'}${dn.length?`, funded by trimming ${dn.length} K/L (${lst(dn)})`:''}. Total K/L spending stays at ${fT(CEIL)}, so the deficit is unchanged at ${fmt(DP,2)}% of GDP. `;}
+  if(S.mode==='add'&&ch.length){t+=`<b>Extra spending:</b> ${up.length?lst(up):'none'}${dn.length?`; cuts: ${lst(dn)}`:''}. Total K/L spending becomes ${fT(P)} and the deficit moves to <b>${fmt(DP,2)}% of GDP</b>, ${fmt(Math.max(0,3-DP),2)} percentage points below the 3% legal cap. `;}
+  if(R-R0>=50){t+=`<b>Realisation:</b> projected at ${fmt(R/P*100,1)}% (${fT(R)}), up ${fT(R-R0)} from September, leaving ${fT(P-R)} unspent.`;}
+  $('#story').innerHTML=t;
+}
+function renderSim(){
+  $$('#simMode button').forEach(b=>b.classList.toggle('on',b.dataset.m===S.mode));
+  renderSimK();renderTree();renderCmp();renderEd();renderStory();
+}
+$('#edSel').innerHTML=KB.map((k,i)=>`<option value="${i}">${k.n}</option>`).join('');
+$('#edSel').addEventListener('change',e=>{S.sel=+e.target.value;renderSim();});
+$('#rgPagu').addEventListener('input',e=>{setPagu(S.sel,+e.target.value);renderSim();});
+$$('#pm button').forEach(b=>b.addEventListener('click',()=>{setPagu(S.sel,S.p[S.sel]+(+b.dataset.d));renderSim();}));
+$('#edSrc').addEventListener('change',e=>{S.src=e.target.value;renderSim();});
+$('#rgReal').addEventListener('input',e=>{setReal(S.sel,+e.target.value);renderSim();});
+$('#rgAll').addEventListener('input',e=>{setAllReal(+e.target.value);renderSim();});
+$$('#simMode button').forEach(b=>b.addEventListener('click',()=>{if(b.dataset.m===S.mode)return;resetSim(b.dataset.m);
+  toast(S.mode==='add'?'Add spending: extra pagu raises Belanja Negara and the deficit, up to the 3% of GDP cap.':'Reallocate: every rupiah added to one K/L is taken from others. Total stays at Rp1.510,5 T.');renderSim();}));
+const PRE=[['reset','↺ Back to APBN 2026'],['gizi','Prioritas gizi: +Rp25 T to BGN'],['pangan','Ketahanan pangan: +Rp10 T to Kementan, from K/L lainnya'],['stim','Stimulus: +Rp40 T to Kementerian PU (adds to deficit)'],['q4','Percepatan Q4: every K/L reaches 95%']];
+$('#presets').innerHTML=PRE.map(p=>`<button data-p="${p[0]}">${p[1]}</button>`).join('');
+const kIdx=sh=>KB.findIndex(k=>k.s===sh);
+$$('#presets button').forEach(b=>b.addEventListener('click',()=>{const id=b.dataset.p;
+  if(id==='reset'){resetSim('realloc');S.sel=0;}
+  if(id==='gizi'){resetSim('realloc');S.sel=kIdx('BGN');setPagu(S.sel,KB[S.sel].p0+25000);}
+  if(id==='pangan'){resetSim('realloc');S.sel=kIdx('Kementan');S.src=String(LAIN);setPagu(S.sel,KB[S.sel].p0+10000);}
+  if(id==='stim'){resetSim('add');S.sel=kIdx('Kementerian PU');setPagu(S.sel,KB[S.sel].p0+40000);}
+  if(id==='q4'){$('#rgAll').value=95;setAllReal(95);}
+  renderSim();}));
+
+/* ---------- page tabs ---------- */
+function setPg(pg,scroll){$$('.tab').forEach(t=>t.classList.toggle('on',t.dataset.pg===pg));
+  $('#pgOverview').classList.toggle('on',pg==='ov');$('#pgKL').classList.toggle('on',pg==='kl');
+  if(pg==='kl')renderSim();
+  if(pg==='ov'){$$('#pgOverview .reveal').forEach(r=>r.classList.add('in'));}
+  if(scroll){const y=$('#tabsAnchor').getBoundingClientRect().top+window.scrollY-2;window.scrollTo({top:Math.max(0,y),behavior:reduce?'auto':'smooth'});}}
+$$('.tab').forEach(t=>t.addEventListener('click',()=>setPg(t.dataset.pg,true)));
+$('#ctaKL').addEventListener('click',()=>setPg('kl',true));
+window.addEventListener('resize',()=>{if($('#pgKL').classList.contains('on'))renderTree();});
 
 /* ---------- Time machine ---------- */
 const H=DATA.hist.slice().sort((a,b)=>a.Tahun-b.Tahun);
